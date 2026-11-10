@@ -27,24 +27,26 @@ The phone number, (301) 525-1949, is already in. To change it, search `index.htm
 
 Then:
 
-1. **Quote form:** connect it to your inbox (next section). Until it's connected, the form asks people to call or text.
+1. **Quote form:** already connected to Formspree. Send a test request once the site is live (see below).
 2. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
 
 Before changing the design or copy, read `DESIGN.md`.
 
-## Connect the quote form
+## The quote form (Formspree)
 
-The site has no prices. People fill out the quote form and you text them a quote. The site can't send email by itself, so it uses Formspree, a free service that forwards each form to your inbox (the free plan covers 50 requests a month).
+The site has no prices. People fill out the quote form and you text them a quote. The site can't send email by itself, so the form goes to Formspree, which emails each request to you. It's already connected to the Formspree form `mqpqzpaa` (the form's `action` in `index.html`). The free plan covers 50 requests a month.
 
-1. Go to formspree.io and sign up with your business email.
-2. Create a new form and call it "Quote requests".
-3. Formspree shows the form's link, like `https://formspree.io/f/xyzabcd`. Copy the code at the end (`xyzabcd`).
-4. In `script.js`, paste it at the top: `const FORMSPREE_ID = 'xyzabcd';`
-5. Send yourself a test request from the live site and check it arrives.
+Each request comes in with the service, how often, preferred day, ZIP, bedrooms, bathrooms, notes, name and phone, with the subject "Quote request from (name)". If the customer gave an email, you can hit Reply.
 
-Each request comes in with the service, how often, preferred day, ZIP, bedrooms, bathrooms, notes, name and phone. If the customer gave an email, you can hit Reply.
+How it works: `script.js` sends the form in the background (Ajax), so the customer stays on the page and sees "Quote request sent". If JavaScript doesn't load, the form still posts to the same address as a plain HTML form and Formspree shows its own thank-you page.
 
-Don't want Formspree? Put your email in `QUOTE_EMAIL` instead. The form then opens the customer's email app with the request filled in. It works, but more people give up at that step, especially on phones.
+In the Formspree dashboard:
+
+- **Keep CAPTCHA off** for this form (Settings, under spam protection). The form sends in the background, and a CAPTCHA would block it. A hidden spam trap field (`_gotcha`) is built in instead.
+- **Notifications:** you can add a second email so you both get every request.
+- **Test it:** after the site is live, send one request yourself and check it lands in your inbox (it counts toward the 50).
+
+To use a different Formspree form, change the `action` on `<form id="quote-form">` in `index.html`.
 
 ## Check it on a real phone
 

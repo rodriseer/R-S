@@ -241,7 +241,8 @@
       </div>
 
       <div class="form-card">
-        <form id="quote-form" class="quote-form" novalidate>
+        <!-- Quote requests go to Formspree, which emails them to us. If JavaScript fails to load, this still posts as a plain HTML form. -->
+        <form id="quote-form" class="quote-form" action="https://formspree.io/f/mqpqzpaa" method="POST" novalidate>
           <div class="field-group" role="group" aria-labelledby="q-service">
             <p id="q-service" class="field-label">What do you need?</p>
             <div class="chips" data-group="service">

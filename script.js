@@ -1,13 +1,7 @@
 /* R&S Cleaning Services homepage */
 
-// Where quote requests go (see README, "Connect the quote form").
-// FORMSPREE_ID: the code at the end of your Formspree form link, e.g. 'xyzabcd'.
-//   Requests then arrive in your inbox with no extra step for the customer.
-// QUOTE_EMAIL: backup only. If FORMSPREE_ID is empty, the form opens the
-//   customer's email app with the request filled in, addressed to this email.
-// While both are empty, the form asks people to call or text instead.
-const FORMSPREE_ID = '';
-const QUOTE_EMAIL = '';
+// Quote requests go to Formspree (form mqpqzpaa). The address is the form's
+// action in index.html; to switch forms, change it there.
 
 (function () {
   const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -203,42 +197,47 @@ const QUOTE_EMAIL = '';
       return;
     }
 
+    const email = form.elements.email;
+    if (email.value.trim() && !email.checkValidity()) {
+      email.setAttribute('aria-invalid', 'true');
+      showError('That email doesn’t look right. Fix it or leave it empty.');
+      email.focus();
+      return;
+    }
+    email.setAttribute('aria-invalid', 'false');
+
     const details = quoteDetails();
     const firstName = details.Name.split(' ')[0];
-    const subject = 'Quote request from ' + details.Name;
+    const payload = Object.assign({
+      _subject: 'Quote request from ' + details.Name,
+      _gotcha: form.elements._gotcha.value
+    }, details);
 
-    if (FORMSPREE_ID) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
-      const payload = Object.assign({ _subject: subject, _gotcha: form.elements._gotcha.value }, details);
-      fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(function (response) {
-        if (!response.ok) throw new Error('Formspree returned ' + response.status);
-        showDone('Quote request sent', 'Thanks, ' + firstName + '. We’ll text your quote to ' + details.Phone + '.');
-      }).catch(function () {
-        showError('That didn’t go through. Check your connection and try again, or call or text us at (301) 525-1949.');
-      }).finally(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Get my free quote';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    fetch(form.getAttribute('action'), {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (response.ok) {
+          showDone('Quote request sent', 'Thanks, ' + firstName + '. We’ll text your quote to ' + details.Phone + '.');
+          return;
+        }
+        // Formspree explains what's wrong, e.g. a bad email address
+        const message = data && data.errors && data.errors.length
+          ? data.errors.map(function (err) { return err.message; }).join(' ')
+          : 'That didn’t go through.';
+        showError(message + ' Try again, or call or text us at (301) 525-1949.');
       });
-      return;
-    }
-
-    if (QUOTE_EMAIL) {
-      const body = Object.keys(details).map(function (key) {
-        return (key === 'email' ? 'Email' : key) + ': ' + details[key];
-      }).join('\n');
-      window.location.href = 'mailto:' + QUOTE_EMAIL +
-        '?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(body);
-      showDone('Almost done', 'Your email app opened with your request filled in. Hit send, and we’ll text you a quote.');
-      return;
-    }
-
-    showError('Online quote requests aren’t connected yet. Please call or text us at (301) 525-1949 for a quote.');
+    }).catch(function () {
+      showError('That didn’t go through. Check your connection and try again, or call or text us at (301) 525-1949.');
+    }).finally(function () {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get my free quote';
+    });
   });
 
   document.getElementById('form-reset').addEventListener('click', function () {
