@@ -69,6 +69,6 @@ Most people find R&S on their phone. Design and check every change at 375px wide
 
 1. Who runs it (the owners, a local couple)
 2. Where (Rockville and nearby towns)
-3. What it costs (from $X a visit)
+3. How to get a price (a free quote from the form; there's no price list)
 4. How soon you can start (first visit within X days)
 5. How to reach you (phone next to the main button, and the Call / Text bar on phones)

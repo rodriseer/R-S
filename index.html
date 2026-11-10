@@ -28,7 +28,7 @@
   </button>
   <nav class="nav" id="main-nav" aria-label="Main">
     <a href="#includes">What we clean</a>
-    <a href="#prices">Prices</a>
+    <a href="#services">Services</a>
     <a href="#about">About us</a>
     <a class="btn btn--small" href="#quote">Get a free quote</a>
   </nav>
@@ -45,7 +45,7 @@
         <dl class="facts">
           <div class="facts__row">
             <dt>Price</dt>
-            <dd>From <span class="placeholder">[PRICE]</span> a visit for recurring cleaning</dd>
+            <dd>Free quote. Answer a few questions and we text you a price.</dd>
           </div>
           <div class="facts__row">
             <dt>First visit</dt>
@@ -176,28 +176,28 @@
     </div>
   </section>
 
-  <!-- Prices -->
-  <section id="prices" class="section">
+  <!-- Services -->
+  <section id="services" class="section">
     <div class="wrap stack-40">
       <div class="section-intro">
         <h2 class="h2">Ways to book</h2>
-        <p class="lede">Prices depend on the size of your home and how often we come. You get an exact price before the first visit.</p>
+        <p class="lede">There’s no price list because every home is different. Pick what you need and we’ll send you a free quote before anything is booked.</p>
       </div>
       <div class="book-list">
         <div class="book-row">
           <h3 class="h3 book-row__name">Recurring cleaning</h3>
           <p class="book-row__desc">Weekly, every two weeks or monthly, on the day you pick. Every visit is a full standard clean.</p>
-          <p class="book-row__price">From <span class="placeholder">[PRICE]</span> a visit</p>
+          <a class="btn btn--outline book-row__cta" href="#quote" data-service="recurring">Get a quote</a>
         </div>
         <div class="book-row">
           <h3 class="h3 book-row__name">First deep clean</h3>
           <p class="book-row__desc">We recommend one before recurring visits start. It gets the whole house to a level the regular visits can keep up.</p>
-          <p class="book-row__price">From <span class="placeholder">[PRICE]</span></p>
+          <a class="btn btn--outline book-row__cta" href="#quote" data-service="deep">Get a quote</a>
         </div>
         <div class="book-row">
           <h3 class="h3 book-row__name">Move-in or move-out</h3>
           <p class="book-row__desc">A deep clean of an empty home, with the inside of the cabinets, oven and fridge included.</p>
-          <p class="book-row__price">From <span class="placeholder">[PRICE]</span></p>
+          <a class="btn btn--outline book-row__cta" href="#quote" data-service="move">Get a quote</a>
         </div>
       </div>
     </div>
@@ -224,11 +224,11 @@
     <div class="wrap quote">
       <div class="quote__intro">
         <h2 class="h2">Get a free quote</h2>
-        <p>Tell us about your home and how often you’d like us. It takes about a minute.</p>
+        <p>Answer a few questions about your home and we’ll text you a price. It takes about a minute.</p>
         <div class="next">
           <h3 class="next__title">What happens after you send it</h3>
           <ol class="next__list">
-            <li>We text or email you a price.</li>
+            <li>We text you a price, or email it if you’d rather.</li>
             <li>If we need to see the house first, we set up a short walkthrough.</li>
             <li>We book your first clean, then come back on your day.</li>
           </ol>
@@ -238,18 +238,32 @@
 
       <div class="form-card">
         <form id="quote-form" class="quote-form" novalidate>
-          <div class="form-row form-row--contact">
-            <div class="field">
-              <label for="q-name">Your name</label>
-              <input id="q-name" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" required>
+          <div class="field-group" role="group" aria-labelledby="q-service">
+            <p id="q-service" class="field-label">What do you need?</p>
+            <div class="chips" data-group="service">
+              <button type="button" class="chip" data-value="recurring" aria-pressed="true">Recurring cleaning</button>
+              <button type="button" class="chip" data-value="deep" aria-pressed="false">First deep clean</button>
+              <button type="button" class="chip" data-value="move" aria-pressed="false">Move-in or move-out</button>
             </div>
-            <div class="field">
-              <label for="q-phone">Phone</label>
-              <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+          </div>
+
+          <div class="field-group" id="freq-group" role="group" aria-labelledby="q-freq">
+            <p id="q-freq" class="field-label">How often</p>
+            <div class="chips" data-group="formFreq">
+              <button type="button" class="chip" data-value="weekly" aria-pressed="false">Weekly</button>
+              <button type="button" class="chip" data-value="biweekly" aria-pressed="true">Every 2 weeks</button>
+              <button type="button" class="chip" data-value="monthly" aria-pressed="false">Monthly</button>
             </div>
-            <div class="field">
-              <label for="q-email">Email <span class="optional">(optional)</span></label>
-              <input id="q-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
+          </div>
+
+          <div class="field-group" role="group" aria-labelledby="q-day">
+            <p id="q-day" class="field-label">Preferred day</p>
+            <div class="chips" data-group="day">
+              <button type="button" class="chip chip--day" data-value="1" aria-pressed="false">Mon<span class="sr-only">day</span></button>
+              <button type="button" class="chip chip--day" data-value="2" aria-pressed="false">Tue<span class="sr-only">sday</span></button>
+              <button type="button" class="chip chip--day" data-value="3" aria-pressed="false">Wed<span class="sr-only">nesday</span></button>
+              <button type="button" class="chip chip--day" data-value="4" aria-pressed="true">Thu<span class="sr-only">rsday</span></button>
+              <button type="button" class="chip chip--day" data-value="5" aria-pressed="false">Fri<span class="sr-only">day</span></button>
             </div>
           </div>
 
@@ -279,40 +293,41 @@
             </div>
           </div>
 
-          <div class="field-group" role="group" aria-labelledby="q-freq">
-            <p id="q-freq" class="field-label">How often</p>
-            <div class="chips" data-group="formFreq">
-              <button type="button" class="chip" data-value="weekly" aria-pressed="false">Weekly</button>
-              <button type="button" class="chip" data-value="biweekly" aria-pressed="true">Every 2 weeks</button>
-              <button type="button" class="chip" data-value="monthly" aria-pressed="false">Monthly</button>
-              <button type="button" class="chip" data-value="once" aria-pressed="false">Just once</button>
-            </div>
-          </div>
-
-          <div class="field-group" role="group" aria-labelledby="q-day">
-            <p id="q-day" class="field-label">Preferred day</p>
-            <div class="chips" data-group="day">
-              <button type="button" class="chip chip--day" data-value="1" aria-pressed="false">Mon<span class="sr-only">day</span></button>
-              <button type="button" class="chip chip--day" data-value="2" aria-pressed="false">Tue<span class="sr-only">sday</span></button>
-              <button type="button" class="chip chip--day" data-value="3" aria-pressed="false">Wed<span class="sr-only">nesday</span></button>
-              <button type="button" class="chip chip--day" data-value="4" aria-pressed="true">Thu<span class="sr-only">rsday</span></button>
-              <button type="button" class="chip chip--day" data-value="5" aria-pressed="false">Fri<span class="sr-only">day</span></button>
-            </div>
-          </div>
-
           <div class="field">
-            <label for="q-notes">Anything we should know?</label>
-            <textarea id="q-notes" name="notes" rows="3" enterkeyhint="done" placeholder="Pets, parking, a room to skip"></textarea>
+            <label for="q-notes">Anything we should know? <span class="optional">(optional)</span></label>
+            <textarea id="q-notes" name="notes" rows="3" placeholder="Pets, parking, a room to skip"></textarea>
+          </div>
+
+          <div class="form-row form-row--contact">
+            <div class="field">
+              <label for="q-name">Your name</label>
+              <input id="q-name" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" required>
+            </div>
+            <div class="field">
+              <label for="q-phone">Phone, for your quote by text</label>
+              <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" required>
+            </div>
+            <div class="field">
+              <label for="q-email">Email <span class="optional">(optional)</span></label>
+              <input id="q-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="send">
+            </div>
+          </div>
+
+          <!-- Spam trap: people never see or fill this, bots do -->
+          <div class="trap" aria-hidden="true">
+            <label for="q-website">Leave this empty</label>
+            <input id="q-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
           </div>
 
           <p class="form-error" id="form-error" role="alert" hidden></p>
-          <button type="submit" class="btn btn--large">Request my quote</button>
+          <button type="submit" class="btn btn--large" id="quote-submit">Get my free quote</button>
+          <p class="form-note">We only use your number to send your quote.</p>
         </form>
 
-        <div class="form-done" id="form-done" role="status" hidden>
+        <div class="form-done" id="form-done" role="status" tabindex="-1" hidden>
           <svg class="form-done__star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z"/></svg>
-          <h3 class="h3 form-done__title">Almost done</h3>
-          <p>Your email app opened with your request filled in. Hit send, and we’ll text you a price.</p>
+          <h3 class="h3 form-done__title" id="done-title">Quote request sent</h3>
+          <p id="done-text">We’ll text you a price soon.</p>
           <button type="button" class="btn btn--outline" id="form-reset">Start a new request</button>
         </div>
       </div>

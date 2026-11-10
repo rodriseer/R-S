@@ -22,27 +22,41 @@ Use find and replace in `index.html` for each placeholder. Replace every match, 
 
 - `[PHONE]`: write it like `301-555-0123`. It's in the hero, quote section, footer and the phone Call / Text bar
 - `[EMAIL]`: quote section and footer
-- `[PRICE]`: 4 spots (hero, and the 3 rows in Ways to book)
 - `[NUMBER]`: hero, how many days until the first visit after a quote
 
 Then:
 
 1. **Photo:** put a real photo of the owners in `assets/` (for example `owners.jpg`, a phone photo is fine) and swap the `<div class="photo-slot">` in the About section for
    `<img class="about__photo" src="assets/owners.jpg" alt="The owners of R&amp;S Cleaning Services">`
-2. **Quote form:** open `script.js` and set `QUOTE_EMAIL` at the top to your business email. When someone sends the form, their email app opens with the request filled in, addressed to you. Until it's set, the form asks people to call or text.
+2. **Quote form:** connect it to your inbox (next section). Until it's connected, the form asks people to call or text.
 3. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
 
 Before changing the design or copy, read `DESIGN.md`.
+
+## Connect the quote form
+
+There's no price list on the site. People fill out the quote form and you text them a price. The site can't send email by itself, so it uses Formspree, a free service that forwards each form to your inbox (the free plan covers 50 requests a month).
+
+1. Go to formspree.io and sign up with your business email.
+2. Create a new form and call it "Quote requests".
+3. Formspree shows the form's link, like `https://formspree.io/f/xyzabcd`. Copy the code at the end (`xyzabcd`).
+4. In `script.js`, paste it at the top: `const FORMSPREE_ID = 'xyzabcd';`
+5. Send yourself a test request from the live site and check it arrives.
+
+Each request comes in with the service, how often, preferred day, ZIP, bedrooms, bathrooms, notes, name and phone. If the customer gave an email, you can hit Reply.
+
+Don't want Formspree? Put your email in `QUOTE_EMAIL` instead. The form then opens the customer's email app with the request filled in. It works, but more people give up at that step, especially on phones.
 
 ## Check it on a real phone
 
 Most people find the business on their phone, so after each change open the live site on an iPhone and an Android phone and check:
 
-- The first screen shows who you are, the price and the Call / Text / Get a quote bar at the bottom
+- The first screen shows what you do, where, how to get a price and the Call / Text / Get a quote bar at the bottom
 - Tapping **Call** opens the dialer and **Text** opens messages, with your number filled in
 - **Menu** opens and closes, and the links jump to the right section
 - Tapping a room in "What every clean covers" opens and closes it
 - Typing in the quote form brings up the number pad for phone and ZIP, and the bottom bar gets out of the way
+- Sending a test quote request shows "Quote request sent" and the request lands in your inbox
 - Nothing makes you scroll sideways or pinch to read
 
 For a speed and accessibility report, open the live site in Chrome on a computer, then **More tools → Developer tools → Lighthouse**, pick **Mobile** and run it.
