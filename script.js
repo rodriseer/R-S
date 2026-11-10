@@ -198,7 +198,7 @@ const QUOTE_EMAIL = '';
       if (bad && !firstBad) firstBad = input;
     });
     if (firstBad) {
-      showError('Add your name and phone number so we can text you a price.');
+      showError('Add your name and phone number so we can text you a quote.');
       firstBad.focus();
       return;
     }
@@ -217,7 +217,7 @@ const QUOTE_EMAIL = '';
         body: JSON.stringify(payload)
       }).then(function (response) {
         if (!response.ok) throw new Error('Formspree returned ' + response.status);
-        showDone('Quote request sent', 'Thanks, ' + firstName + '. We’ll text your price to ' + details.Phone + '.');
+        showDone('Quote request sent', 'Thanks, ' + firstName + '. We’ll text your quote to ' + details.Phone + '.');
       }).catch(function () {
         showError('That didn’t go through. Check your connection and try again, or call or text us.');
       }).finally(function () {
@@ -234,11 +234,11 @@ const QUOTE_EMAIL = '';
       window.location.href = 'mailto:' + QUOTE_EMAIL +
         '?subject=' + encodeURIComponent(subject) +
         '&body=' + encodeURIComponent(body);
-      showDone('Almost done', 'Your email app opened with your request filled in. Hit send, and we’ll text you a price.');
+      showDone('Almost done', 'Your email app opened with your request filled in. Hit send, and we’ll text you a quote.');
       return;
     }
 
-    showError('Online quote requests aren’t connected yet. Please call or text us for a price.');
+    showError('Online quote requests aren’t connected yet. Please call or text us for a quote.');
   });
 
   document.getElementById('form-reset').addEventListener('click', function () {

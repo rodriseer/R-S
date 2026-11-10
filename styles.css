@@ -280,7 +280,7 @@ a:hover { color: var(--blue-dark); }
 .deep-legend::before { content: ""; width: 18px; height: 18px; flex: 0 0 auto; background: var(--star) center / contain no-repeat; }
 .includes--deep .deep-legend { display: flex; }
 
-/* Prices */
+/* Ways to book */
 .book-list { display: flex; flex-direction: column; border-bottom: 1px solid var(--rule); }
 .book-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-block: 28px; border-top: 1px solid var(--rule); }
 .book-row__name { font-size: 26px; }

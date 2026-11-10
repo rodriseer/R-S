@@ -44,6 +44,10 @@ No gradients anywhere.
 - Emoji
 - Floating badges, fake chat bubbles, pop-ups
 
+## Quotes, not prices
+
+Never show prices, price ranges or "from $X" anywhere on the site. Every job is quoted, so point people to the free quote form instead.
+
 ## Names
 
 Don't put the owners' names anywhere on the site. Say "the owners" or "a couple in Rockville" instead.
@@ -52,7 +56,7 @@ Don't put the owners' names anywhere on the site. Say "the owners" or "a couple 
 
 Before adding any sentence, ask: **could a competitor put this on their site without changing a word?** If yes, rewrite it with a fact, or delete it.
 
-Good facts are a name, a price, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, leave a `[PLACEHOLDER]` and ask. Never invent one.
+Good facts are a name, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, leave a `[PLACEHOLDER]` and ask. Never invent one.
 
 ## Phones first
 
@@ -69,6 +73,6 @@ Most people find R&S on their phone. Design and check every change at 375px wide
 
 1. Who runs it (the owners, a local couple)
 2. Where (Rockville and nearby towns)
-3. How to get a price (a free quote from the form; there's no price list)
+3. How to get a free quote (the quote form)
 4. How soon you can start (first visit within X days)
 5. How to reach you (phone next to the main button, and the Call / Text bar on phones)

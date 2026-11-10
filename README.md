@@ -35,7 +35,7 @@ Before changing the design or copy, read `DESIGN.md`.
 
 ## Connect the quote form
 
-There's no price list on the site. People fill out the quote form and you text them a price. The site can't send email by itself, so it uses Formspree, a free service that forwards each form to your inbox (the free plan covers 50 requests a month).
+The site has no prices. People fill out the quote form and you text them a quote. The site can't send email by itself, so it uses Formspree, a free service that forwards each form to your inbox (the free plan covers 50 requests a month).
 
 1. Go to formspree.io and sign up with your business email.
 2. Create a new form and call it "Quote requests".
@@ -51,7 +51,7 @@ Don't want Formspree? Put your email in `QUOTE_EMAIL` instead. The form then ope
 
 Most people find the business on their phone, so after each change open the live site on an iPhone and an Android phone and check:
 
-- The first screen shows what you do, where, how to get a price and the Call / Text / Get a quote bar at the bottom
+- The first screen shows what you do, where, how to get a free quote and the Call / Text / Get a quote bar at the bottom
 - Tapping **Call** opens the dialer and **Text** opens messages, with your number filled in
 - **Menu** opens and closes, and the links jump to the right section
 - Tapping a room in "What every clean covers" opens and closes it
