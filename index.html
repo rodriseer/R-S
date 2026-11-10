@@ -3,17 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>R&amp;S Cleaning Services | Home cleaning in Rockville, MD</title>
+  <title>R&amp;S Cleaning Services | House cleaning in Rockville, MD</title>
   <meta name="description" content="Weekly, every-other-week and monthly home cleaning in Rockville and across Montgomery County, Maryland. Owner-run by Rodrigo and Sabrina.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
+
+<div class="topbar">
+  <div class="wrap topbar__inner">
+    <p>Call or text <span class="placeholder">[PHONE]</span></p>
+    <p>Open <span class="placeholder">[DAYS AND HOURS]</span></p>
+    <p lang="pt">Falamos português</p>
+  </div>
+</div>
 
 <header class="site-header wrap">
   <a class="site-header__logo" href="#top">
@@ -22,7 +30,6 @@
   <nav class="nav" aria-label="Main">
     <a href="#includes">What we clean</a>
     <a href="#prices">Prices</a>
-    <a href="#how">How it works</a>
     <a href="#about">About us</a>
     <a class="btn btn--small" href="#quote">Get a free quote</a>
   </nav>
@@ -34,8 +41,22 @@
   <section id="top" class="hero">
     <div class="wrap hero__inner">
       <div class="hero__copy">
-        <h1 class="hero__title">Set your cleaning day once. We’ll be there every time.</h1>
-        <p class="hero__lede">R&amp;S Cleaning Services cleans homes in Rockville and across Montgomery County every week, every two weeks or once a month. We run it ourselves, so the people who answer your call are the people who check the work.</p>
+        <h1 class="hero__title">House cleaning in Rockville, run by Rodrigo and Sabrina.</h1>
+        <p class="hero__lede">Pick a day once and we come back on it every week, every two weeks or once a month. From the first quote to every visit after, you deal with the two of us, not a call center.</p>
+        <dl class="facts">
+          <div class="facts__row">
+            <dt>Price</dt>
+            <dd>From <span class="placeholder">[PRICE]</span> a visit for recurring cleaning</dd>
+          </div>
+          <div class="facts__row">
+            <dt>First visit</dt>
+            <dd>Usually within <span class="placeholder">[NUMBER]</span> days of your quote</dd>
+          </div>
+          <div class="facts__row">
+            <dt>Area</dt>
+            <dd>Rockville and nearby Montgomery County towns</dd>
+          </div>
+        </dl>
         <div class="hero__actions">
           <a class="btn btn--large" href="#quote">Get a free quote</a>
           <p>or call or text <span class="placeholder">[PHONE]</span></p>
@@ -183,39 +204,16 @@
     </div>
   </section>
 
-  <!-- How it works -->
-  <section id="how" class="section section--mist">
-    <div class="wrap stack-40">
-      <h2 class="h2">How it works</h2>
-      <ol class="steps">
-        <li class="step">
-          <span class="step__num" aria-hidden="true">1</span>
-          <h3 class="h3">Tell us about your home</h3>
-          <p>Bedrooms, bathrooms, pets and how often you’d like us to come. The form below takes about a minute.</p>
-        </li>
-        <li class="step">
-          <span class="step__num" aria-hidden="true">2</span>
-          <h3 class="h3">Get your price</h3>
-          <p>We text or email you a quote. If we need a closer look first, we set up a short walkthrough.</p>
-        </li>
-        <li class="step">
-          <span class="step__num" aria-hidden="true">3</span>
-          <h3 class="h3">We start on your day</h3>
-          <p>After the first clean, we come back on the same day, on your schedule. Questions go straight to us, the owners.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
   <!-- About -->
-  <section id="about" class="section">
+  <section id="about" class="section section--mist">
     <div class="wrap about">
-      <!-- Replace this box with: <img class="about__photo" src="assets/owners.jpg" alt="Rodrigo and Sabrina"> -->
+      <!-- Replace this box with a real photo of the two of you (a phone photo is fine):
+           <img class="about__photo" src="assets/owners.jpg" alt="Rodrigo and Sabrina"> -->
       <div class="photo-slot">Photo of Rodrigo and Sabrina</div>
       <div class="about__text">
         <h2 class="h2">R&amp;S is Rodrigo and Sabrina</h2>
         <p>We’re a couple based in Rockville, and R&amp;S is our business. We set the schedules, check the work and answer the phone ourselves. If something isn’t right after a visit, you tell us, not a call center.</p>
-        <p>We speak English and Portuguese.</p>
+        <p>We speak English and Portuguese. <span lang="pt">Falamos português.</span></p>
         <h3 class="h3 about__sub">Where we clean</h3>
         <p>Rockville, Gaithersburg, North Bethesda, Bethesda, Potomac, Kensington, Silver Spring, Derwood and Olney. Close by but not on the list? Ask us.</p>
       </div>
@@ -227,7 +225,15 @@
     <div class="wrap quote">
       <div class="quote__intro">
         <h2 class="h2">Get a free quote</h2>
-        <p>Tell us about your home and how often you’d like us. We’ll text or email you a price.</p>
+        <p>Tell us about your home and how often you’d like us. It takes about a minute.</p>
+        <div class="next">
+          <h3 class="next__title">What happens after you send it</h3>
+          <ol class="next__list">
+            <li>We text or email you a price.</li>
+            <li>If we need to see the house first, we set up a short walkthrough.</li>
+            <li>We book your first clean, then come back on your day.</li>
+          </ol>
+        </div>
         <p class="quote__alt">Rather talk? Call or text <span class="placeholder">[PHONE]</span> or email <span class="placeholder">[EMAIL]</span></p>
       </div>
 

@@ -13,21 +13,26 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 | `script.js` | The schedule picker, the standard/deep clean switch and the quote form |
 | `assets/rs-logo.png` | Logo with a clear background |
 | `assets/favicon.png` | Small square icon for the browser tab |
+| `DESIGN.md` | Design rules for this site, including what not to do (give it to any AI tool you use to edit the site) |
 
 ## Before it goes live
 
-Search `index.html` for `class="placeholder"` and replace each one:
+Search `index.html` for `class="placeholder"` and replace each one with the real fact:
 
-- `[PHONE]`: 3 spots (hero, quote section, footer)
+- `[PHONE]`: 4 spots (top bar, hero, quote section, footer)
 - `[EMAIL]`: 2 spots (quote section, footer)
-- `[PRICE]`: 3 spots (Ways to book)
+- `[PRICE]`: 4 spots (hero, and the 3 rows in Ways to book)
+- `[DAYS AND HOURS]`: top bar, for example "Mon to Fri, 8am to 6pm"
+- `[NUMBER]`: hero, how many days until the first visit after a quote
 
 Then:
 
-1. **Photo:** put a photo in `assets/` (for example `owners.jpg`) and swap the `<div class="photo-slot">` in the About section for
+1. **Photo:** put a real photo of the two of you in `assets/` (for example `owners.jpg`, a phone photo is fine) and swap the `<div class="photo-slot">` in the About section for
    `<img class="about__photo" src="assets/owners.jpg" alt="Rodrigo and Sabrina">`
 2. **Quote form:** open `script.js` and set `QUOTE_EMAIL` at the top to your business email. When someone sends the form, their email app opens with the request filled in, addressed to you. Until it's set, the form asks people to call or text.
-3. **Check the details:** service area towns, the room checklist and the "How it works" steps should match how you actually work.
+3. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
+
+Before changing the design or copy, read `DESIGN.md`.
 
 ## Put it online with GitHub Pages
 
