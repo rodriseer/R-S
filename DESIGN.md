@@ -50,7 +50,7 @@ Never show prices, price ranges or "from $X" anywhere on the site. Every job is 
 
 ## Names
 
-Don't put the owners' names anywhere on the site. Say "the owners" or "a couple in Rockville" instead.
+Don't put the owners' names or photos of them anywhere on the site. Say "our family" or "a family business in Rockville" instead.
 
 ## Copy test
 
@@ -71,7 +71,7 @@ Most people find R&S on their phone. Design and check every change at 375px wide
 
 ## What the first screen must show
 
-1. Who runs it (the owners, a local couple)
+1. Who runs it (a family business in Rockville)
 2. Where (Rockville and nearby towns)
 3. How to get a free quote (the quote form)
 4. How soon you can start (first visit within X days)

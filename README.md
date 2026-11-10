@@ -1,6 +1,6 @@
 # R&S Cleaning Services
 
-Homepage for R&S Cleaning Services, an owner-run home cleaning business in Rockville, Maryland.
+Homepage for R&S Cleaning Services, a family-run home cleaning business in Rockville, Maryland.
 
 It's a plain static site: no build step, no framework. Open `index.html` in a browser to see it.
 
@@ -26,10 +26,8 @@ Use find and replace in `index.html` for each placeholder. Replace every match, 
 
 Then:
 
-1. **Photo:** put a real photo of the owners in `assets/` (for example `owners.jpg`, a phone photo is fine) and swap the `<div class="photo-slot">` in the About section for
-   `<img class="about__photo" src="assets/owners.jpg" alt="The owners of R&amp;S Cleaning Services">`
-2. **Quote form:** connect it to your inbox (next section). Until it's connected, the form asks people to call or text.
-3. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
+1. **Quote form:** connect it to your inbox (next section). Until it's connected, the form asks people to call or text.
+2. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
 
 Before changing the design or copy, read `DESIGN.md`.
 
