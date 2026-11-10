@@ -8,9 +8,9 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The page and all its text |
+| `index.html` | The page, all its text and the drawings (the hidden `<svg class="sprite">` at the top) |
 | `styles.css` | Colors, fonts and layout (colors are taken from the logo) |
-| `script.js` | The schedule picker, the standard/deep clean switch and the quote form |
+| `script.js` | The schedule picker, the standard/deep clean switch, the quote form and the scroll effects |
 | `assets/rs-logo.webp`, `rs-logo-220.webp`, `rs-logo.png` | Logo with a clear background, in sizes for phones and desktop (the PNG is a fallback for old browsers) |
 | `assets/favicon-32.png`, `apple-touch-icon.png` | Browser tab icon, and the icon an iPhone uses if someone adds the site to their home screen |
 | `assets/fonts/` | The two fonts, served from this site so phones don't wait on Google Fonts |
@@ -48,6 +48,21 @@ In the Formspree dashboard:
 
 To use a different Formspree form, change the `action` on `<form id="quote-form">` in `index.html`.
 
+## Drawings and effects
+
+The cleaning drawings are part of the page, not image files, so they load instantly and stay sharp at any size.
+
+- **The spray bottle** on the schedule card puffs when someone picks a schedule
+- **The vacuum** under the hero crosses the page as you scroll and leaves sparkles where the dust was
+- **The three service drawings** pop in, drift a little as you scroll, and tilt toward the mouse on a computer
+- **The bubbles** along the top of the quote section float at different speeds
+
+People who turn off motion on their phone or computer see everything standing still.
+
+**Use a real photo for a service:** put the photo in `assets/` (under 200 KB, about 1200px wide). In `index.html`, find the service's `<div class="service__art" …>`, replace the whole `<svg>…</svg>` inside it with `<img src="assets/your-photo.jpg" alt="what the photo shows">`, and delete `aria-hidden="true"` from that div. Only use photos of your own jobs.
+
+**Change how far something moves:** each moving part has `data-fx-y` (up and down), `data-fx-x` (sideways) or `data-fx-rot` (degrees of turn). Bigger numbers move more; delete the attribute to keep that part still.
+
 ## Check it on a real phone
 
 Most people find the business on their phone, so after each change open the live site on an iPhone and an Android phone and check:
@@ -56,6 +71,7 @@ Most people find the business on their phone, so after each change open the live
 - Tapping **Call** opens the dialer and **Text** opens messages, with your number filled in
 - **Menu** opens and closes, and the links jump to the right section
 - Tapping a room in "What every clean covers" opens and closes it
+- Scrolling feels smooth: the vacuum crosses under the schedule card, and the bottle puffs when you pick a schedule
 - Typing in the quote form brings up the number pad for phone and ZIP, and the bottom bar gets out of the way
 - Sending a test quote request shows "Quote request sent" and the request lands in your inbox
 - Nothing makes you scroll sideways or pinch to read

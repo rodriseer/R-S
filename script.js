@@ -314,6 +314,147 @@
     if (event.target.matches('input, select, textarea')) actionBar.classList.remove('action-bar--hidden');
   });
 
+  /* ---------- Illustrations: reveal, scroll motion, vacuum, spray, tilt ---------- */
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasIO = 'IntersectionObserver' in window;
+
+  // Illustrations pop in the first time they scroll into view
+  const revealEls = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  if (hasIO) {
+    const revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        revealIO.unobserve(entry.target);
+      });
+    }, { threshold: 0.25 });
+    revealEls.forEach(function (el) { revealIO.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  // Scroll motion. Inside a [data-fx-scene], anything with data-fx-y / data-fx-x (distance)
+  // or data-fx-rot (degrees) drifts or turns by that much while the scene crosses the screen.
+  const scenes = Array.prototype.slice.call(document.querySelectorAll('[data-fx-scene]')).map(function (host) {
+    const parts = Array.prototype.slice.call(host.querySelectorAll('[data-fx-y], [data-fx-x], [data-fx-rot]')).map(function (el) {
+      return {
+        el: el,
+        x: Number(el.dataset.fxX) || 0,
+        y: Number(el.dataset.fxY) || 0,
+        rot: Number(el.dataset.fxRot) || 0,
+        inSvg: !!el.ownerSVGElement
+      };
+    });
+    return { host: host, parts: parts, visible: !hasIO };
+  });
+
+  // Vacuum band: the vacuum crosses as the band moves up the screen. Dust it has passed stays gone.
+  const track = document.querySelector('.sweep__track');
+  const vac = document.querySelector('.sweep__vac');
+  const readX = function (el) { return parseFloat(el.style.getPropertyValue('--x')) / 100; };
+  const dust = Array.prototype.slice.call(document.querySelectorAll('.sweep__dust')).map(function (el) { return { el: el, x: readX(el) }; });
+  const sparkles = Array.prototype.slice.call(document.querySelectorAll('.sweep__star')).map(function (el) { return { el: el, x: readX(el) }; });
+  let sweepVisible = !hasIO;
+  let cleaned = 0; // furthest the vacuum has reached, 0 to 1
+
+  function updateSweep(viewportHeight, progressOverride) {
+    const box = track.getBoundingClientRect();
+    const vacWidth = vac.getBoundingClientRect().width;
+    const travel = box.width - vacWidth;
+    const progress = progressOverride !== undefined ? progressOverride
+      : Math.min(1, Math.max(0, (viewportHeight * 0.92 - box.top) / (viewportHeight * 0.55)));
+    cleaned = Math.max(cleaned, progress);
+    vac.style.transform = 'translate3d(' + (travel * progress).toFixed(1) + 'px, 0, 0)';
+    const head = (travel * cleaned + vacWidth * 0.9) / box.width;
+    const tail = (travel * cleaned + vacWidth * 0.25) / box.width;
+    dust.forEach(function (d) { d.el.classList.toggle('is-gone', d.x < head); });
+    sparkles.forEach(function (sp) { sp.el.classList.toggle('is-on', sp.x < tail); });
+  }
+
+  const phoneWidth = window.matchMedia('(max-width: 560px)');
+  let ticking = false;
+  function frame() {
+    ticking = false;
+    const viewportHeight = window.innerHeight;
+    scenes.forEach(function (scene) {
+      if (!scene.visible) return;
+      const box = scene.host.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (viewportHeight - box.top) / (viewportHeight + box.height))) - 0.5;
+      scene.parts.forEach(function (part) {
+        // Parts inside an SVG already shrink with the drawing; plain elements move less on phones
+        const k = part.inSvg ? 1 : (phoneWidth.matches ? 0.6 : 1);
+        part.el.style.transform = 'translate(' + (part.x * p * k).toFixed(1) + 'px, ' + (part.y * p * k).toFixed(1) + 'px) rotate(' + (part.rot * p).toFixed(1) + 'deg)';
+      });
+    });
+    if (sweepVisible) updateSweep(viewportHeight);
+  }
+  function requestFrame() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(frame);
+  }
+
+  if (reduceMotion) {
+    // No movement: show the floor already vacuumed, with the vacuum parked at the end
+    updateSweep(window.innerHeight, 1);
+    window.addEventListener('resize', function () { updateSweep(window.innerHeight, 1); });
+  } else {
+    if (hasIO) {
+      const sceneIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.target === track) { sweepVisible = entry.isIntersecting; return; }
+          scenes.forEach(function (scene) { if (scene.host === entry.target) scene.visible = entry.isIntersecting; });
+        });
+        requestFrame();
+      }, { rootMargin: '80px 0px' });
+      scenes.forEach(function (scene) { sceneIO.observe(scene.host); });
+      sceneIO.observe(track);
+    }
+    window.addEventListener('scroll', requestFrame, { passive: true });
+    window.addEventListener('resize', requestFrame);
+    requestFrame();
+  }
+
+  // Spray bottle on the schedule card: one puff when the card first shows, and one for every pick
+  const sprayEl = document.querySelector('.spray');
+  const scheduler = document.querySelector('.scheduler');
+  function spray() {
+    if (reduceMotion) return;
+    sprayEl.classList.remove('is-spraying');
+    void sprayEl.offsetWidth; // restarts the animation
+    sprayEl.classList.add('is-spraying');
+  }
+  scheduler.addEventListener('click', function (event) {
+    if (event.target.closest('.chip')) spray();
+  });
+  if (hasIO) {
+    const sprayIO = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      spray();
+      sprayIO.disconnect();
+    }, { threshold: 0.4 });
+    sprayIO.observe(scheduler);
+  }
+
+  // Desktop only: service illustrations tilt toward the mouse
+  if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    Array.prototype.forEach.call(document.querySelectorAll('.service'), function (card) {
+      const art = card.querySelector('.service__art');
+      card.addEventListener('pointermove', function (event) {
+        const box = art.getBoundingClientRect();
+        const dx = Math.max(-0.5, Math.min(0.5, (event.clientX - box.left) / box.width - 0.5));
+        const dy = Math.max(-0.5, Math.min(0.5, (event.clientY - box.top) / box.height - 0.5));
+        art.style.setProperty('--ry', (dx * 12).toFixed(1) + 'deg');
+        art.style.setProperty('--rx', (dy * -12).toFixed(1) + 'deg');
+      });
+      card.addEventListener('pointerleave', function () {
+        art.style.removeProperty('--rx');
+        art.style.removeProperty('--ry');
+      });
+    });
+  }
+
   /* ---------- Small things ---------- */
 
   document.getElementById('year').textContent = String(today.getFullYear());
