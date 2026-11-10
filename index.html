@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>R&amp;S Cleaning Services | Home cleaning in Rockville, MD</title>
+  <meta name="description" content="Weekly, every-other-week and monthly home cleaning in Rockville and across Montgomery County, Maryland. Owner-run by Rodrigo and Sabrina.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<header class="site-header wrap">
+  <a class="site-header__logo" href="#top">
+    <img src="assets/rs-logo.png" alt="R&amp;S Cleaning Services" width="900" height="482">
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="#includes">What we clean</a>
+    <a href="#prices">Prices</a>
+    <a href="#how">How it works</a>
+    <a href="#about">About us</a>
+    <a class="btn btn--small" href="#quote">Get a free quote</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section id="top" class="hero">
+    <div class="wrap hero__inner">
+      <div class="hero__copy">
+        <h1 class="hero__title">Set your cleaning day once. We’ll be there every time.</h1>
+        <p class="hero__lede">R&amp;S Cleaning Services cleans homes in Rockville and across Montgomery County every week, every two weeks or once a month. We run it ourselves, so the people who answer your call are the people who check the work.</p>
+        <div class="hero__actions">
+          <a class="btn btn--large" href="#quote">Get a free quote</a>
+          <p>or call or text <span class="placeholder">[PHONE]</span></p>
+        </div>
+      </div>
+
+      <div class="scheduler">
+        <h2 class="scheduler__title">Try a schedule</h2>
+
+        <div class="field-group" role="group" aria-labelledby="hero-freq">
+          <p id="hero-freq" class="scheduler__label">How often</p>
+          <div class="chips" data-group="freq">
+            <button type="button" class="chip chip--dark" data-value="weekly" aria-pressed="false">Weekly</button>
+            <button type="button" class="chip chip--dark" data-value="biweekly" aria-pressed="true">Every 2 weeks</button>
+            <button type="button" class="chip chip--dark" data-value="monthly" aria-pressed="false">Monthly</button>
+          </div>
+        </div>
+
+        <div class="field-group" role="group" aria-labelledby="hero-day">
+          <p id="hero-day" class="scheduler__label">Day of the week</p>
+          <div class="chips" data-group="day">
+            <button type="button" class="chip chip--dark chip--day" data-value="1" aria-pressed="false" aria-label="Monday">Mon</button>
+            <button type="button" class="chip chip--dark chip--day" data-value="2" aria-pressed="false" aria-label="Tuesday">Tue</button>
+            <button type="button" class="chip chip--dark chip--day" data-value="3" aria-pressed="false" aria-label="Wednesday">Wed</button>
+            <button type="button" class="chip chip--dark chip--day" data-value="4" aria-pressed="true" aria-label="Thursday">Thu</button>
+            <button type="button" class="chip chip--dark chip--day" data-value="5" aria-pressed="false" aria-label="Friday">Fri</button>
+          </div>
+        </div>
+
+        <div class="cal">
+          <div class="cal__head">
+            <h3 class="cal__month" id="cal-month">Next month</h3>
+            <p class="cal__count" id="cal-count"></p>
+          </div>
+          <div class="cal__grid" id="cal-grid" aria-hidden="true">
+            <div class="cal__weekday">Sun</div>
+            <div class="cal__weekday">Mon</div>
+            <div class="cal__weekday">Tue</div>
+            <div class="cal__weekday">Wed</div>
+            <div class="cal__weekday">Thu</div>
+            <div class="cal__weekday">Fri</div>
+            <div class="cal__weekday">Sat</div>
+          </div>
+        </div>
+
+        <p class="scheduler__summary" id="cal-summary" aria-live="polite"></p>
+        <a class="btn btn--light" href="#quote" id="request-schedule">Request this schedule</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we clean -->
+  <section id="includes" class="section section--mist">
+    <div class="wrap stack-48">
+      <div class="includes__top">
+        <div class="section-intro">
+          <h2 class="h2">What every clean covers</h2>
+          <p class="lede">This is our checklist, room by room. Switch to deep clean to see what we add for a first visit or a move.</p>
+        </div>
+        <div class="toggle" role="group" aria-label="Type of clean" data-group="clean">
+          <button type="button" class="toggle__btn" data-value="standard" aria-pressed="true">Standard clean</button>
+          <button type="button" class="toggle__btn" data-value="deep" aria-pressed="false">Deep clean</button>
+        </div>
+      </div>
+
+      <div class="rooms">
+        <div class="room">
+          <h3 class="h3">Kitchen</h3>
+          <ul class="checklist">
+            <li>Counters and backsplash wiped down</li>
+            <li>Sink and faucet scrubbed and shined</li>
+            <li>Stovetop degreased</li>
+            <li>Outside of the fridge, oven, microwave and dishwasher</li>
+            <li>Inside the microwave</li>
+            <li>Table and chairs wiped</li>
+            <li>Floor vacuumed and mopped</li>
+            <li class="is-deep">Inside the oven<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Inside the fridge<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Cabinet fronts wiped top to bottom<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Range hood and filter degreased<span class="sr-only"> (deep clean)</span></li>
+          </ul>
+        </div>
+        <div class="room">
+          <h3 class="h3">Bathrooms</h3>
+          <ul class="checklist">
+            <li>Toilet cleaned inside and out, base included</li>
+            <li>Shower, tub and tile scrubbed</li>
+            <li>Sink, counter and mirror cleaned</li>
+            <li>Faucets and fixtures shined</li>
+            <li>Trash emptied</li>
+            <li>Floor mopped</li>
+            <li class="is-deep">Grout scrubbed<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Soap scum and hard-water spots taken off the glass<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Cabinet fronts and baseboards wiped<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Exhaust fan cover dusted<span class="sr-only"> (deep clean)</span></li>
+          </ul>
+        </div>
+        <div class="room">
+          <h3 class="h3">Bedrooms and living areas</h3>
+          <ul class="checklist">
+            <li>Every surface we can reach dusted</li>
+            <li>Mirrors and glass cleaned</li>
+            <li>Beds made, sheets changed if you leave fresh ones out</li>
+            <li>Carpets vacuumed, hard floors mopped</li>
+            <li>Trash emptied</li>
+            <li class="is-deep">Baseboards, door frames and light switches<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Ceiling fans and vents<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Window sills and tracks<span class="sr-only"> (deep clean)</span></li>
+            <li class="is-deep">Under furniture we can safely move<span class="sr-only"> (deep clean)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="includes__notes">
+        <p class="deep-legend">Starred items are added in a deep clean.</p>
+        <p>Need inside cabinets, inside windows or laundry? Add it when you ask for a quote.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prices -->
+  <section id="prices" class="section">
+    <div class="wrap stack-40">
+      <div class="section-intro">
+        <h2 class="h2">Ways to book</h2>
+        <p class="lede">Prices depend on the size of your home and how often we come. You get an exact price before the first visit.</p>
+      </div>
+      <div class="book-list">
+        <div class="book-row">
+          <h3 class="h3 book-row__name">Recurring cleaning</h3>
+          <p class="book-row__desc">Weekly, every two weeks or monthly, on the day you pick. Every visit is a full standard clean.</p>
+          <p class="book-row__price">From <span class="placeholder">[PRICE]</span> a visit</p>
+        </div>
+        <div class="book-row">
+          <h3 class="h3 book-row__name">First deep clean</h3>
+          <p class="book-row__desc">We recommend one before recurring visits start. It gets the whole house to a level the regular visits can keep up.</p>
+          <p class="book-row__price">From <span class="placeholder">[PRICE]</span></p>
+        </div>
+        <div class="book-row">
+          <h3 class="h3 book-row__name">Move-in or move-out</h3>
+          <p class="book-row__desc">A deep clean of an empty home, with the inside of the cabinets, oven and fridge included.</p>
+          <p class="book-row__price">From <span class="placeholder">[PRICE]</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="section section--mist">
+    <div class="wrap stack-40">
+      <h2 class="h2">How it works</h2>
+      <ol class="steps">
+        <li class="step">
+          <span class="step__num" aria-hidden="true">1</span>
+          <h3 class="h3">Tell us about your home</h3>
+          <p>Bedrooms, bathrooms, pets and how often you’d like us to come. The form below takes about a minute.</p>
+        </li>
+        <li class="step">
+          <span class="step__num" aria-hidden="true">2</span>
+          <h3 class="h3">Get your price</h3>
+          <p>We text or email you a quote. If we need a closer look first, we set up a short walkthrough.</p>
+        </li>
+        <li class="step">
+          <span class="step__num" aria-hidden="true">3</span>
+          <h3 class="h3">We start on your day</h3>
+          <p>After the first clean, we come back on the same day, on your schedule. Questions go straight to us, the owners.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="wrap about">
+      <!-- Replace this box with: <img class="about__photo" src="assets/owners.jpg" alt="Rodrigo and Sabrina"> -->
+      <div class="photo-slot">Photo of Rodrigo and Sabrina</div>
+      <div class="about__text">
+        <h2 class="h2">R&amp;S is Rodrigo and Sabrina</h2>
+        <p>We’re a couple based in Rockville, and R&amp;S is our business. We set the schedules, check the work and answer the phone ourselves. If something isn’t right after a visit, you tell us, not a call center.</p>
+        <p>We speak English and Portuguese.</p>
+        <h3 class="h3 about__sub">Where we clean</h3>
+        <p>Rockville, Gaithersburg, North Bethesda, Bethesda, Potomac, Kensington, Silver Spring, Derwood and Olney. Close by but not on the list? Ask us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section id="quote" class="section section--navy">
+    <div class="wrap quote">
+      <div class="quote__intro">
+        <h2 class="h2">Get a free quote</h2>
+        <p>Tell us about your home and how often you’d like us. We’ll text or email you a price.</p>
+        <p class="quote__alt">Rather talk? Call or text <span class="placeholder">[PHONE]</span> or email <span class="placeholder">[EMAIL]</span></p>
+      </div>
+
+      <div class="form-card">
+        <form id="quote-form" class="quote-form" novalidate>
+          <div class="form-row form-row--2">
+            <div class="field">
+              <label for="q-name">Your name</label>
+              <input id="q-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="q-contact">Phone or email</label>
+              <input id="q-contact" name="contact" type="text" autocomplete="tel" required>
+            </div>
+          </div>
+
+          <div class="form-row form-row--3">
+            <div class="field">
+              <label for="q-zip">ZIP code</label>
+              <input id="q-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="10">
+            </div>
+            <div class="field">
+              <label for="q-bed">Bedrooms</label>
+              <select id="q-bed" name="bedrooms">
+                <option>Studio or 1</option>
+                <option>2</option>
+                <option selected>3</option>
+                <option>4</option>
+                <option>5 or more</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="q-bath">Bathrooms</label>
+              <select id="q-bath" name="bathrooms">
+                <option>1</option>
+                <option selected>2</option>
+                <option>3</option>
+                <option>4 or more</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-group" role="group" aria-labelledby="q-freq">
+            <p id="q-freq" class="field-label">How often</p>
+            <div class="chips" data-group="formFreq">
+              <button type="button" class="chip" data-value="weekly" aria-pressed="false">Weekly</button>
+              <button type="button" class="chip" data-value="biweekly" aria-pressed="true">Every 2 weeks</button>
+              <button type="button" class="chip" data-value="monthly" aria-pressed="false">Monthly</button>
+              <button type="button" class="chip" data-value="once" aria-pressed="false">Just once</button>
+            </div>
+          </div>
+
+          <div class="field-group" role="group" aria-labelledby="q-day">
+            <p id="q-day" class="field-label">Preferred day</p>
+            <div class="chips" data-group="day">
+              <button type="button" class="chip chip--day" data-value="1" aria-pressed="false" aria-label="Monday">Mon</button>
+              <button type="button" class="chip chip--day" data-value="2" aria-pressed="false" aria-label="Tuesday">Tue</button>
+              <button type="button" class="chip chip--day" data-value="3" aria-pressed="false" aria-label="Wednesday">Wed</button>
+              <button type="button" class="chip chip--day" data-value="4" aria-pressed="true" aria-label="Thursday">Thu</button>
+              <button type="button" class="chip chip--day" data-value="5" aria-pressed="false" aria-label="Friday">Fri</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="q-notes">Anything we should know?</label>
+            <textarea id="q-notes" name="notes" rows="3" placeholder="Pets, parking, a room to skip"></textarea>
+          </div>
+
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button type="submit" class="btn btn--large">Request my quote</button>
+        </form>
+
+        <div class="form-done" id="form-done" role="status" hidden>
+          <svg class="form-done__star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z"/></svg>
+          <h3 class="h3 form-done__title">Almost done</h3>
+          <p>Your email app opened with your request filled in. Hit send, and we’ll text or email you a price.</p>
+          <button type="button" class="btn btn--outline" id="form-reset">Start a new request</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <img class="site-footer__logo" src="assets/rs-logo.png" alt="R&amp;S Cleaning Services" width="900" height="482">
+    <div class="site-footer__contact">
+      <p>Call or text <span class="placeholder">[PHONE]</span></p>
+      <p>Email <span class="placeholder">[EMAIL]</span></p>
+    </div>
+    <div class="site-footer__meta">
+      <p>Home cleaning in Rockville and Montgomery County, Maryland</p>
+      <p>© <span id="year">2026</span> R&amp;S Cleaning Services</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
