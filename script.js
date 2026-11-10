@@ -24,6 +24,8 @@
     service: 'recurring'  // what the quote is for
   };
 
+  const phoneQuery = window.matchMedia('(max-width: 560px)');
+
   /* ---------- Calendar: always shows next month ---------- */
 
   const today = new Date();
@@ -145,6 +147,15 @@
   const done = document.getElementById('form-done');
   const errorEl = document.getElementById('form-error');
 
+  // Optional note and email: open on a computer, folded into one row on a phone unless something is typed in them
+  const extras = document.querySelector('.extras');
+  function setupExtras() {
+    const filled = form.elements.notes.value.trim() || form.elements.email.value.trim();
+    extras.open = !phoneQuery.matches || !!filled;
+  }
+  if (phoneQuery.addEventListener) phoneQuery.addEventListener('change', setupExtras);
+  setupExtras();
+
   function showError(message) {
     errorEl.textContent = message;
     errorEl.hidden = false;
@@ -219,6 +230,7 @@
     if (email.value.trim() && !email.checkValidity()) {
       email.setAttribute('aria-invalid', 'true');
       showError('That email doesn’t look right. Fix it or leave it empty.');
+      extras.open = true;
       email.focus();
       return;
     }
@@ -260,6 +272,7 @@
 
   document.getElementById('form-reset').addEventListener('click', function () {
     form.reset();
+    setupExtras();
     form.hidden = false;
     done.hidden = true;
     form.elements.zip.focus();
@@ -282,7 +295,6 @@
 
   /* ---------- Room checklists: folded on phones, always open on wider screens ---------- */
 
-  const phoneQuery = window.matchMedia('(max-width: 560px)');
   const rooms = Array.prototype.slice.call(document.querySelectorAll('.room'));
   function setupRooms() {
     rooms.forEach(function (room, i) {
@@ -319,24 +331,23 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasIO = 'IntersectionObserver' in window;
 
-  // Illustrations pop in the first time they scroll into view
-  const revealEls = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
-  if (hasIO) {
-    const revealIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
-        revealIO.unobserve(entry.target);
-      });
-    }, { threshold: 0.25 });
-    revealEls.forEach(function (el) { revealIO.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('is-in'); });
+  // How the motion feels. Change these three numbers to tune it.
+  const EASE = 0.14;   // how quickly motion catches up with your scrolling (1 = instantly, smaller = softer)
+  const DRIFT = 0.7;   // how far the drifting parts travel (1 = the full data-fx-* distance)
+  const TURN = 0.5;    // how far the turning parts rotate (1 = the full data-fx-rot angle)
+
+  const clamp01 = function (n) { return Math.min(1, Math.max(0, n)); };
+
+  // Bottom of the part of the page you can actually see (above the Call / Text bar on phones)
+  function visibleBottom() {
+    const bar = actionBar.getBoundingClientRect();
+    return bar.height ? Math.min(window.innerHeight, bar.top) : window.innerHeight;
   }
 
-  // Scroll motion. Inside a [data-fx-scene], anything with data-fx-y / data-fx-x (distance)
+  // A scene is a [data-fx-scene] block. Inside it, anything with data-fx-y / data-fx-x (distance)
   // or data-fx-rot (degrees) drifts or turns by that much while the scene crosses the screen.
-  const scenes = Array.prototype.slice.call(document.querySelectorAll('[data-fx-scene]')).map(function (host) {
+  // Scenes with [data-reveal] also fade their drawing in as they come up from the bottom.
+  const scenes = Array.prototype.slice.call(document.querySelectorAll('[data-fx-scene]')).map(function (host, index) {
     const parts = Array.prototype.slice.call(host.querySelectorAll('[data-fx-y], [data-fx-x], [data-fx-rot]')).map(function (el) {
       return {
         el: el,
@@ -346,74 +357,114 @@
         inSvg: !!el.ownerSVGElement
       };
     });
-    return { host: host, parts: parts, visible: !hasIO };
+    return {
+      host: host,
+      parts: parts,
+      art: host.hasAttribute('data-reveal') ? host.querySelector('.art') : null,
+      lag: (index % 3) * 0.05, // drawings side by side come in one after another
+      visible: !hasIO,
+      pass: null,   // -0.5 (just coming in at the bottom) to 0.5 (leaving at the top)
+      entry: null   // 0 (not in yet) to 1 (fully in)
+    };
   });
 
-  // Vacuum band: the vacuum crosses as the band moves up the screen. Dust it has passed stays gone.
+  // Vacuum band: the vacuum crosses once while the band travels up the screen. Dust it has passed stays gone.
   const track = document.querySelector('.sweep__track');
   const vac = document.querySelector('.sweep__vac');
   const readX = function (el) { return parseFloat(el.style.getPropertyValue('--x')) / 100; };
   const dust = Array.prototype.slice.call(document.querySelectorAll('.sweep__dust')).map(function (el) { return { el: el, x: readX(el) }; });
   const sparkles = Array.prototype.slice.call(document.querySelectorAll('.sweep__star')).map(function (el) { return { el: el, x: readX(el) }; });
-  let sweepVisible = !hasIO;
-  let cleaned = 0; // furthest the vacuum has reached, 0 to 1
+  const sweep = { visible: !hasIO, progress: null, cleaned: 0 };
 
-  function updateSweep(viewportHeight, progressOverride) {
+  function drawSweep(progress) {
     const box = track.getBoundingClientRect();
     const vacWidth = vac.getBoundingClientRect().width;
     const travel = box.width - vacWidth;
-    const progress = progressOverride !== undefined ? progressOverride
-      : Math.min(1, Math.max(0, (viewportHeight * 0.92 - box.top) / (viewportHeight * 0.55)));
-    cleaned = Math.max(cleaned, progress);
+    sweep.cleaned = Math.max(sweep.cleaned, progress);
     vac.style.transform = 'translate3d(' + (travel * progress).toFixed(1) + 'px, 0, 0)';
-    const head = (travel * cleaned + vacWidth * 0.9) / box.width;
-    const tail = (travel * cleaned + vacWidth * 0.25) / box.width;
+    const head = (travel * sweep.cleaned + vacWidth * 0.9) / box.width;
+    const tail = (travel * sweep.cleaned + vacWidth * 0.25) / box.width;
     dust.forEach(function (d) { d.el.classList.toggle('is-gone', d.x < head); });
     sparkles.forEach(function (sp) { sp.el.classList.toggle('is-on', sp.x < tail); });
   }
 
-  const phoneWidth = window.matchMedia('(max-width: 560px)');
-  let ticking = false;
-  function frame() {
-    ticking = false;
+  function drawScene(scene) {
+    const p = scene.pass;
+    scene.parts.forEach(function (part) {
+      // Parts inside a drawing already shrink with it; plain elements move less on phones
+      const k = DRIFT * (part.inSvg ? 1 : (phoneQuery.matches ? 0.6 : 1));
+      part.el.style.transform = 'translate(' + (part.x * p * k).toFixed(2) + 'px, ' + (part.y * p * k).toFixed(2) + 'px) rotate(' + (part.rot * p * TURN).toFixed(2) + 'deg)';
+    });
+    if (scene.art) {
+      const e = scene.entry;
+      scene.art.style.opacity = e.toFixed(3);
+      scene.art.style.transform = 'translateY(' + ((1 - e) * 22).toFixed(1) + 'px) scale(' + (0.94 + 0.06 * e).toFixed(4) + ')';
+    }
+  }
+
+  // Move a value part of the way to its target. Returns the new value, or the target once it is close enough.
+  function ease(current, target) {
+    if (current === null) return target; // first time: start in place, no catching up
+    const next = current + (target - current) * EASE;
+    return Math.abs(target - next) < 0.0015 ? target : next;
+  }
+
+  // One loop drives everything. It runs while something is still catching up, then stops.
+  let running = false;
+  function tick() {
     const viewportHeight = window.innerHeight;
+    const bottom = visibleBottom();
+    let moving = false;
+
     scenes.forEach(function (scene) {
       if (!scene.visible) return;
       const box = scene.host.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (viewportHeight - box.top) / (viewportHeight + box.height))) - 0.5;
-      scene.parts.forEach(function (part) {
-        // Parts inside an SVG already shrink with the drawing; plain elements move less on phones
-        const k = part.inSvg ? 1 : (phoneWidth.matches ? 0.6 : 1);
-        part.el.style.transform = 'translate(' + (part.x * p * k).toFixed(1) + 'px, ' + (part.y * p * k).toFixed(1) + 'px) rotate(' + (part.rot * p).toFixed(1) + 'deg)';
-      });
+      const passTarget = clamp01((bottom - box.top) / (bottom + box.height)) - 0.5;
+      const entryTarget = clamp01((bottom - box.top) / (viewportHeight * 0.4) - scene.lag);
+      scene.pass = ease(scene.pass, passTarget);
+      scene.entry = ease(scene.entry, entryTarget);
+      if (scene.pass !== passTarget || scene.entry !== entryTarget) moving = true;
+      drawScene(scene);
     });
-    if (sweepVisible) updateSweep(viewportHeight);
+
+    if (sweep.visible) {
+      const box = track.getBoundingClientRect();
+      // 0 when the band comes into view at the bottom, 1 when it nears the top of the screen
+      const target = clamp01((bottom - box.top) / (bottom - viewportHeight * 0.12));
+      sweep.progress = ease(sweep.progress, target);
+      if (sweep.progress !== target) moving = true;
+      drawSweep(sweep.progress);
+    }
+
+    if (moving) window.requestAnimationFrame(tick);
+    else running = false;
   }
-  function requestFrame() {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(frame);
+  function wake() {
+    if (running) return;
+    running = true;
+    window.requestAnimationFrame(tick);
   }
 
   if (reduceMotion) {
-    // No movement: show the floor already vacuumed, with the vacuum parked at the end
-    updateSweep(window.innerHeight, 1);
-    window.addEventListener('resize', function () { updateSweep(window.innerHeight, 1); });
+    // No movement: drawings are simply there, and the floor is shown already vacuumed
+    scenes.forEach(function (scene) { if (scene.art) scene.art.style.opacity = '1'; });
+    drawSweep(1);
+    window.addEventListener('resize', function () { drawSweep(1); });
   } else {
     if (hasIO) {
       const sceneIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.target === track) { sweepVisible = entry.isIntersecting; return; }
+          if (entry.target === track) { sweep.visible = entry.isIntersecting; return; }
           scenes.forEach(function (scene) { if (scene.host === entry.target) scene.visible = entry.isIntersecting; });
         });
-        requestFrame();
-      }, { rootMargin: '80px 0px' });
+        wake();
+      }, { rootMargin: '120px 0px' });
       scenes.forEach(function (scene) { sceneIO.observe(scene.host); });
       sceneIO.observe(track);
     }
-    window.addEventListener('scroll', requestFrame, { passive: true });
-    window.addEventListener('resize', requestFrame);
-    requestFrame();
+    window.addEventListener('scroll', wake, { passive: true });
+    window.addEventListener('resize', wake);
+    wake();
   }
 
   // Spray bottle on the schedule card: one puff when the card first shows, and one for every pick

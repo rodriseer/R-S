@@ -38,7 +38,7 @@ The drawings (spray bottle, vacuum, sponge, calendar, boxes, broom, bubbles, sta
 
 - **Style:** flat shapes, 2px navy outline, filled only with white, the blues above and pale blue (`#BFE3F5`, `#CFE6F5`). No gradients, no shadows, no other colors. A new drawing has to look like it belongs to the same set
 - **Where they go:** in their own space (the service panels, the vacuum band, the edge of a section, on top of the schedule card). Never behind or over text
-- **Motion means something:** the bottle sprays when a schedule is picked, the vacuum crosses and leaves sparkles as you scroll, bubbles drift at different speeds. No effect that plays on a loop just to move
+- **Motion follows the person:** things move only when someone scrolls or taps. The bottle sprays when a schedule is picked, the vacuum crosses at the pace of the scroll, drawings fade in as they come up. Nothing plays on a loop, and nothing races ahead of the scroll
 - **Phones first:** every effect has to work on a phone, not only on desktop
 - **Reduced motion:** people who turn motion off on their device see the same drawings standing still. Keep it that way
 - **Photos:** only real photos of real R&S jobs. A service panel can show a photo instead of its drawing (see README)
@@ -79,6 +79,7 @@ Most people find R&S on their phone. Design and check every change at 375px wide
 - No pop-ups, cookie walls or chat bubbles covering the page
 - Keep it light: fonts stay self-hosted, logos stay WebP, and any photo you add should be under 200 KB and no wider than 1600px
 - Long lists fold up on phones (like the room checklists) instead of making people scroll past them
+- The quote form fits in about one phone screen: required fields only, choices as rows of equal buttons, optional fields folded away. Don't add a required field without removing one
 
 ## What the first screen must show
 

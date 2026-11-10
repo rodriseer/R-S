@@ -309,22 +309,37 @@ a:hover { color: var(--blue-dark); }
 .about__block { display: flex; flex-direction: column; gap: 10px; padding-top: 20px; border-top: 2px solid var(--navy); }
 
 /* Quote */
-.quote { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 48px 64px; }
-.quote__intro { flex: 1 1 320px; min-width: 0; max-width: 28em; display: flex; flex-direction: column; gap: 18px; }
-.quote__intro p { font-size: 18px; color: var(--muted-on-navy); }
+/* One column by default: intro, form, then what happens next.
+   Two columns on wide screens: intro and what happens next on the left, form on the right. */
+.quote { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+.quote__intro,
+.quote__after { min-width: 0; max-width: 28em; display: flex; flex-direction: column; gap: 18px; }
+.quote__intro p,
+.quote__alt { font-size: 18px; color: var(--muted-on-navy); }
 .quote__alt { line-height: 1.8; }
+.form-card { order: 2; }
+.quote__after { order: 3; }
+@media (min-width: 900px) {
+  .quote { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); grid-template-rows: auto 1fr; gap: 24px 64px; align-items: start; }
+  .quote__intro { grid-column: 1; grid-row: 1; }
+  .quote__after { grid-column: 1; grid-row: 2; }
+  .form-card { grid-column: 2; grid-row: 1 / span 2; }
+}
 .quote__alt a, .site-footer__contact a { color: inherit; }
 .next { display: flex; flex-direction: column; gap: 8px; padding-top: 6px; }
 .next__title { font-family: var(--sans); font-size: 17px; font-weight: 600; color: var(--white); }
 .next__list { padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; color: var(--muted-on-navy); font-size: 17px; }
 .next__list li::marker { color: var(--white); font-weight: 600; }
 
-.form-card { position: relative; flex: 1.4 1 480px; min-width: 0; padding: 32px; border-radius: 18px; background: var(--white); color: var(--navy); }
+.form-card { position: relative; min-width: 0; padding: 32px; border-radius: 18px; background: var(--white); color: var(--navy); }
 .quote-form { display: flex; flex-direction: column; gap: 22px; }
 .quote-form > .btn { align-self: flex-start; }
 .form-row { display: grid; gap: 20px; }
 .form-row--contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.form-row--contact .field:first-child { grid-column: 1 / -1; }
+
+/* Optional note and email: always open on a computer, folded into one row on a phone */
+.extras__toggle { display: none; }
+.extras__body { display: grid; gap: 22px; }
 .optional { font-weight: 400; color: var(--muted); }
 .form-row--3 { grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); }
 .field { display: flex; flex-direction: column; gap: 6px; }
@@ -375,11 +390,9 @@ a:hover { color: var(--blue-dark); }
 .art g[data-fx-x],
 .art g[data-fx-rot] { transform-box: fill-box; transform-origin: center; }
 
-/* Illustrations pop in the first time they scroll into view (only when JavaScript is on) */
-.js [data-reveal] .art { opacity: 0; transform: translateY(16px) scale(0.95); }
-.js [data-reveal].is-in .art { opacity: 1; transform: none; transition: opacity 500ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1); }
-.js .service:nth-child(2) [data-reveal].is-in .art { transition-delay: 90ms; }
-.js .service:nth-child(3) [data-reveal].is-in .art { transition-delay: 180ms; }
+/* Drawings fade in as you scroll to them. script.js sets how far in they are,
+   so they start hidden only when JavaScript is on. */
+.js [data-reveal] .art { opacity: 0; }
 
 /* Spray bottle standing on the schedule card */
 .spray { position: absolute; right: 30px; bottom: calc(100% - 4px); width: 48px; height: 72px; pointer-events: none; }
@@ -387,8 +400,8 @@ a:hover { color: var(--blue-dark); }
 .spray__mist { position: absolute; left: 6%; top: 22%; width: 0; height: 0; }
 .spray__mist i { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--sky); opacity: 0; }
 .spray__mist i:nth-child(even) { left: -2px; top: -2px; width: 4px; height: 4px; background: #7CC9EC; }
-.spray.is-spraying .spray__mist i { animation: puff 750ms cubic-bezier(0.2, 0.7, 0.3, 1) both; animation-delay: calc(var(--i) * 45ms); }
-.spray.is-spraying .spray__bottle { animation: squeeze 320ms ease-out; }
+.spray.is-spraying .spray__mist i { animation: puff 1300ms cubic-bezier(0.2, 0.6, 0.3, 1) both; animation-delay: calc(var(--i) * 80ms); }
+.spray.is-spraying .spray__bottle { animation: squeeze 520ms ease-out; }
 @keyframes puff {
   0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
   25% { opacity: 0.95; }
@@ -412,7 +425,7 @@ a:hover { color: var(--blue-dark); }
   height: calc(var(--w, 7px) * 0.65);
   border-radius: 50% 45% 55% 40%;
   background: #9FB3C8;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity 350ms ease, transform 350ms ease;
 }
 .sweep__dust.is-gone { opacity: 0; transform: translateX(10px) scale(0.2); }
 .sweep__star {
@@ -423,11 +436,11 @@ a:hover { color: var(--blue-dark); }
   height: var(--s);
   opacity: 0;
   transform: scale(0.2) rotate(-40deg);
-  transition: opacity 250ms ease, transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 500ms ease, transform 800ms cubic-bezier(0.3, 1.3, 0.5, 1);
 }
 .sweep__star.is-on { opacity: 1; transform: none; }
 
-/* Soap bubbles along the top edge of the quote section */
+/* Soap bubbles along the top edge of the quote section. They only move when you scroll. */
 .suds { position: absolute; left: 0; right: 0; top: 0; height: 0; pointer-events: none; --bubble-fill: rgba(255, 255, 255, 0.14); }
 .suds__b {
   --size: calc(var(--s) * 1.5);
@@ -437,11 +450,7 @@ a:hover { color: var(--blue-dark); }
   width: var(--size);
   height: var(--size);
 }
-.suds__b svg { display: block; width: 100%; height: 100%; overflow: visible; animation: bob 5s ease-in-out infinite alternate; animation-delay: calc(var(--i, 0) * -0.9s); }
-@keyframes bob {
-  from { transform: translateY(-4px); }
-  to { transform: translateY(5px); }
-}
+.suds__b svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
 /* Call / Text / Get a quote bar: phones only */
 .action-bar { display: none; }
@@ -566,11 +575,68 @@ a:hover { color: var(--blue-dark); }
 
   .about { gap: 32px; }
 
-  .form-card { padding: 22px; }
+  /* Quote section, kept short: heading, form, then what happens next */
+  .section--navy { padding-block: 44px 48px; }
+  .quote { gap: 22px; }
+  .quote__intro { gap: 10px; }
+  .quote .h2 { font-size: 28px; }
+  .quote__intro p { font-size: 16px; line-height: 1.5; }
+  .quote__alt { display: none; } /* the Call and Text buttons are already at the bottom of the screen */
+  .quote__after { gap: 0; }
+  .next { gap: 6px; padding-top: 0; }
+  .next__title { font-size: 16px; }
+  .next__list { gap: 3px; font-size: 15px; }
+
+  .form-card { padding: 18px; border-radius: 14px; }
+  .quote-form { gap: 16px; }
+  .quote-form .field-group { gap: 6px; }
+  .field label,
+  .field-label { font-size: 14px; }
+  .field input,
+  .field select,
+  .field textarea { min-height: 46px; padding: 9px 12px; font-size: 16px; } /* 16px stops iPhones zooming in on tap */
+  .field select { padding-right: 4px; }
+  .field textarea { height: 76px; }
+
+  /* Choices become equal columns: one row each instead of wrapping */
+  .quote-form .chips--3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .quote-form .chips--5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .quote-form .chip { min-width: 0; min-height: 46px; padding: 4px 6px; border-radius: 10px; font-size: 14px; line-height: 1.15; text-wrap: balance; }
+
+  .form-row { gap: 16px; }
   .form-row--contact { grid-template-columns: minmax(0, 1fr); }
-  .form-row--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .form-row--3 .field:first-child { grid-column: 1 / -1; }
-  .quote-form > .btn { width: 100%; }
+  .form-row--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+
+  .extras__toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    list-style: none;
+    color: var(--blue);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .extras__toggle::-webkit-details-marker { display: none; }
+  .extras__toggle::before {
+    content: "+";
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .extras[open] > .extras__toggle::before { content: "\2212"; }
+  .extras[open] > .extras__toggle { margin-bottom: 10px; }
+  .extras__body { gap: 16px; }
+
+  .quote-form > .btn { width: 100%; min-height: 52px; }
+  .form-note { font-size: 14px; margin-top: -6px; }
 
   .site-footer__inner { padding-block: 28px 32px; gap: 20px; }
 }
