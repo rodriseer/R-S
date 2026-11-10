@@ -18,9 +18,10 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 
 ## Before it goes live
 
-Use find and replace in `index.html` for each placeholder. Replace every match, not just the visible ones: `[PHONE]` and `[EMAIL]` also sit inside the links that make the Call, Text and email buttons work on phones.
+Use find and replace in `index.html` for each placeholder. Replace every match, not just the visible ones: `[EMAIL]` also sits inside the email links.
 
-- `[PHONE]`: write it like `301-555-0123`. It's in the hero, quote section, footer and the phone Call / Text bar
+The phone number, (301) 525-1949, is already in. To change it, search `index.html` for `525-1949` (what people see) and `+13015251949` (the Call and Text links), and `script.js` for `525-1949` (form messages).
+
 - `[EMAIL]`: quote section and footer
 - `[NUMBER]`: hero, how many days until the first visit after a quote
 
