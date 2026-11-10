@@ -147,12 +147,6 @@ a:hover { color: var(--blue-dark); }
 .chip--dark { background: transparent; border-color: rgba(255, 255, 255, 0.5); color: var(--white); }
 .chip--dark[aria-pressed="true"] { background: var(--white); border-color: var(--white); color: var(--navy); }
 
-/* Top bar: phone, hours, language */
-.topbar { background: var(--navy); color: var(--white); font-size: 15px; }
-.topbar__inner { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 28px; padding-block: 8px; }
-.topbar .placeholder { padding: 0 6px; }
-.topbar a { color: inherit; }
-
 /* Header */
 .site-header {
   display: flex;
@@ -182,7 +176,7 @@ a:hover { color: var(--blue-dark); }
 .hero__title {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(40px, 4.4vw, 56px);
   line-height: 1.08;
   letter-spacing: -0.015em;
   text-wrap: balance;
@@ -377,10 +371,6 @@ a:hover { color: var(--blue-dark); }
 
 /* Phones and small tablets: menu button, sticky contact bar */
 @media (max-width: 760px) {
-  .topbar__phone { display: none; }
-  .topbar { font-size: 14px; }
-  .topbar__inner { gap: 2px 20px; padding-block: 6px; }
-
   .site-header { flex-wrap: wrap; padding-block: 10px; }
   .site-header__logo img { height: 56px; }
   .menu-btn {

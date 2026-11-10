@@ -1,6 +1,6 @@
 # R&S Cleaning Services
 
-Homepage for R&S Cleaning Services, a home cleaning business in Rockville, Maryland, run by Rodrigo and Sabrina.
+Homepage for R&S Cleaning Services, an owner-run home cleaning business in Rockville, Maryland.
 
 It's a plain static site: no build step, no framework. Open `index.html` in a browser to see it.
 
@@ -20,16 +20,15 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 
 Use find and replace in `index.html` for each placeholder. Replace every match, not just the visible ones: `[PHONE]` and `[EMAIL]` also sit inside the links that make the Call, Text and email buttons work on phones.
 
-- `[PHONE]`: write it like `301-555-0123`. It's in the top bar, hero, quote section, footer and the phone Call / Text bar
+- `[PHONE]`: write it like `301-555-0123`. It's in the hero, quote section, footer and the phone Call / Text bar
 - `[EMAIL]`: quote section and footer
 - `[PRICE]`: 4 spots (hero, and the 3 rows in Ways to book)
-- `[DAYS AND HOURS]`: top bar, for example "Mon to Fri, 8am to 6pm"
 - `[NUMBER]`: hero, how many days until the first visit after a quote
 
 Then:
 
-1. **Photo:** put a real photo of the two of you in `assets/` (for example `owners.jpg`, a phone photo is fine) and swap the `<div class="photo-slot">` in the About section for
-   `<img class="about__photo" src="assets/owners.jpg" alt="Rodrigo and Sabrina">`
+1. **Photo:** put a real photo of the owners in `assets/` (for example `owners.jpg`, a phone photo is fine) and swap the `<div class="photo-slot">` in the About section for
+   `<img class="about__photo" src="assets/owners.jpg" alt="The owners of R&amp;S Cleaning Services">`
 2. **Quote form:** open `script.js` and set `QUOTE_EMAIL` at the top to your business email. When someone sends the form, their email app opens with the request filled in, addressed to you. Until it's set, the form asks people to call or text.
 3. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
 
