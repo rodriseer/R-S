@@ -397,21 +397,25 @@
   <section id="quote" class="section section--navy">
     <!-- Decoration: soap bubbles along the top edge -->
     <div class="suds" data-fx-scene aria-hidden="true">
-      <span class="suds__b" style="--x:3%; --s:24px; --o:-4px; --i:0" data-fx-y="-30"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:7.5%; --s:40px; --o:6px; --i:1" data-fx-y="-56"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:12.5%; --s:18px; --o:-12px; --i:2" data-fx-y="-24"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:17%; --s:12px; --o:4px; --i:3" data-fx-y="-40"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:34%; --s:14px; --o:-2px; --i:4" data-fx-y="-34"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:61%; --s:12px; --o:2px; --i:5" data-fx-y="-28"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:79%; --s:18px; --o:-10px; --i:6" data-fx-y="-30"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:84%; --s:38px; --o:4px; --i:7" data-fx-y="-60"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:89.5%; --s:22px; --o:-8px; --i:8" data-fx-y="-36"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
-      <span class="suds__b" style="--x:94.5%; --s:30px; --o:8px; --i:9" data-fx-y="-48"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:3%; --s:24px; --o:-4px" data-fx-y="-44"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:7.5%; --s:40px; --o:6px" data-fx-y="-80"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:12.5%; --s:18px; --o:-12px" data-fx-y="-36"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:17%; --s:12px; --o:4px" data-fx-y="-58"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:34%; --s:14px; --o:-2px" data-fx-y="-50"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:61%; --s:12px; --o:2px" data-fx-y="-40"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:79%; --s:18px; --o:-10px" data-fx-y="-44"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:84%; --s:38px; --o:4px" data-fx-y="-86"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:89.5%; --s:22px; --o:-8px" data-fx-y="-52"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:94.5%; --s:30px; --o:8px" data-fx-y="-70"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
     </div>
     <div class="wrap quote">
       <div class="quote__intro">
         <h2 class="h2">Get a free quote</h2>
         <p>Answer a few questions about your home and we’ll text you a quote. It takes about a minute.</p>
+      </div>
+
+      <!-- Sits under the intro on a computer and under the form on a phone -->
+      <div class="quote__after">
         <div class="next">
           <h3 class="next__title">What happens after you send it</h3>
           <ol class="next__list">
@@ -428,7 +432,7 @@
         <form id="quote-form" class="quote-form" action="https://formspree.io/f/mqpqzpaa" method="POST" novalidate>
           <div class="field-group" role="group" aria-labelledby="q-service">
             <p id="q-service" class="field-label">What do you need?</p>
-            <div class="chips" data-group="service">
+            <div class="chips chips--3" data-group="service">
               <button type="button" class="chip" data-value="recurring" aria-pressed="true">Recurring cleaning</button>
               <button type="button" class="chip" data-value="deep" aria-pressed="false">First deep clean</button>
               <button type="button" class="chip" data-value="move" aria-pressed="false">Move-in or move-out</button>
@@ -437,7 +441,7 @@
 
           <div class="field-group" id="freq-group" role="group" aria-labelledby="q-freq">
             <p id="q-freq" class="field-label">How often</p>
-            <div class="chips" data-group="formFreq">
+            <div class="chips chips--3" data-group="formFreq">
               <button type="button" class="chip" data-value="weekly" aria-pressed="false">Weekly</button>
               <button type="button" class="chip" data-value="biweekly" aria-pressed="true">Every 2 weeks</button>
               <button type="button" class="chip" data-value="monthly" aria-pressed="false">Monthly</button>
@@ -446,7 +450,7 @@
 
           <div class="field-group" role="group" aria-labelledby="q-day">
             <p id="q-day" class="field-label">Preferred day</p>
-            <div class="chips" data-group="day">
+            <div class="chips chips--5" data-group="day">
               <button type="button" class="chip chip--day" data-value="1" aria-pressed="false">Mon<span class="sr-only">day</span></button>
               <button type="button" class="chip chip--day" data-value="2" aria-pressed="false">Tue<span class="sr-only">sday</span></button>
               <button type="button" class="chip chip--day" data-value="3" aria-pressed="false">Wed<span class="sr-only">nesday</span></button>
@@ -463,11 +467,12 @@
             <div class="field">
               <label for="q-bed">Bedrooms</label>
               <select id="q-bed" name="bedrooms">
-                <option>Studio or 1</option>
+                <option>Studio</option>
+                <option>1</option>
                 <option>2</option>
                 <option selected>3</option>
                 <option>4</option>
-                <option>5 or more</option>
+                <option>5+</option>
               </select>
             </div>
             <div class="field">
@@ -476,14 +481,9 @@
                 <option>1</option>
                 <option selected>2</option>
                 <option>3</option>
-                <option>4 or more</option>
+                <option>4+</option>
               </select>
             </div>
-          </div>
-
-          <div class="field">
-            <label for="q-notes">Anything we should know? <span class="optional">(optional)</span></label>
-            <textarea id="q-notes" name="notes" rows="3" placeholder="Pets, parking, a room to skip"></textarea>
           </div>
 
           <div class="form-row form-row--contact">
@@ -492,14 +492,25 @@
               <input id="q-name" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" required>
             </div>
             <div class="field">
-              <label for="q-phone">Phone, for your quote by text</label>
-              <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" required>
-            </div>
-            <div class="field">
-              <label for="q-email">Email <span class="optional">(optional)</span></label>
-              <input id="q-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="send">
+              <label for="q-phone">Phone</label>
+              <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="send" required>
             </div>
           </div>
+
+          <!-- Optional extras. Always open on a computer; on a phone they fold into one row to keep the form short. -->
+          <details class="extras" open>
+            <summary class="extras__toggle">Add a note or your email <span class="optional">(optional)</span></summary>
+            <div class="extras__body">
+              <div class="field">
+                <label for="q-notes">Anything we should know? <span class="optional">(optional)</span></label>
+                <textarea id="q-notes" name="notes" rows="3" placeholder="Pets, parking, a room to skip"></textarea>
+              </div>
+              <div class="field">
+                <label for="q-email">Email <span class="optional">(optional)</span></label>
+                <input id="q-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="send">
+              </div>
+            </div>
+          </details>
 
           <!-- Spam trap: people never see or fill this, bots do -->
           <div class="trap" aria-hidden="true">
