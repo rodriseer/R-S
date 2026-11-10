@@ -168,7 +168,7 @@
       'Service': SERVICE_LABELS[state.service],
       'How often': state.service === 'recurring' ? FREQ_LABELS[state.formFreq] : 'One time',
       'Preferred day': DAY_NAMES[state.day],
-      'ZIP code': f.zip.value.trim() || 'not given',
+      'ZIP code': f.zip.value.trim(),
       'Bedrooms': f.bedrooms.value,
       'Bathrooms': f.bathrooms.value,
       'Notes': f.notes.value.trim() || 'none',
@@ -183,17 +183,35 @@
     event.preventDefault();
     errorEl.hidden = true;
 
-    const name = form.elements.name;
-    const phone = form.elements.phone;
+    // Required: ZIP (to check we cover the area), name and phone
+    const required = [
+      { input: form.elements.zip, label: 'ZIP code' },
+      { input: form.elements.name, label: 'name' },
+      { input: form.elements.phone, label: 'phone number' }
+    ];
+    const missing = [];
     let firstBad = null;
-    [name, phone].forEach(function (input) {
-      const bad = !input.value.trim();
-      input.setAttribute('aria-invalid', String(bad));
-      if (bad && !firstBad) firstBad = input;
+    required.forEach(function (field) {
+      const bad = !field.input.value.trim();
+      field.input.setAttribute('aria-invalid', String(bad));
+      if (bad) {
+        missing.push(field.label);
+        if (!firstBad) firstBad = field.input;
+      }
     });
     if (firstBad) {
-      showError('Add your name and phone number so we can text you a quote.');
+      const list = missing.length === 1 ? missing[0]
+        : missing.slice(0, -1).join(', ') + ' and ' + missing[missing.length - 1];
+      showError('Add your ' + list + ' so we can text you a quote.');
       firstBad.focus();
+      return;
+    }
+
+    const zip = form.elements.zip;
+    if (!/^[0-9]{5}$/.test(zip.value.trim())) {
+      zip.setAttribute('aria-invalid', 'true');
+      showError('Enter a 5-digit ZIP code.');
+      zip.focus();
       return;
     }
 
