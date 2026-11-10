@@ -30,7 +30,18 @@ No gradients anywhere.
 - Text is left-aligned. Don't center the hero.
 - One main action on the page: **Get a free quote**. Every big button leads to the quote form.
 - Sections alternate white and mist. Lists are separated by thin rules, not put in cards.
-- The only decoration is the star from the logo.
+- Decoration is the star from the logo plus the site's own cleaning drawings (next section). Nothing else.
+
+## Illustrations and motion
+
+The drawings (spray bottle, vacuum, sponge, calendar, boxes, broom, bubbles, star) were made for this site. They live in the hidden `<svg class="sprite">` at the top of `index.html` and are reused with `<use>`.
+
+- **Style:** flat shapes, 2px navy outline, filled only with white, the blues above and pale blue (`#BFE3F5`, `#CFE6F5`). No gradients, no shadows, no other colors. A new drawing has to look like it belongs to the same set
+- **Where they go:** in their own space (the service panels, the vacuum band, the edge of a section, on top of the schedule card). Never behind or over text
+- **Motion means something:** the bottle sprays when a schedule is picked, the vacuum crosses and leaves sparkles as you scroll, bubbles drift at different speeds. No effect that plays on a loop just to move
+- **Phones first:** every effect has to work on a phone, not only on desktop
+- **Reduced motion:** people who turn motion off on their device see the same drawings standing still. Keep it that way
+- **Photos:** only real photos of real R&S jobs. A service panel can show a photo instead of its drawing (see README)
 
 ## Never add
 
@@ -40,7 +51,7 @@ No gradients anywhere.
 - A "Why choose us?" section
 - Numbers without a source (500+ happy clients, 10+ years, 24/7)
 - Testimonials or reviews that aren't real, word for word, from a real customer who agreed to it
-- Stock photos, AI-generated people, bubbles or sparkle clip art
+- Stock photos, AI-generated people, or clip art and icons from other sites
 - Emoji
 - Floating badges, fake chat bubbles, pop-ups
 

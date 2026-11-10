@@ -11,9 +11,106 @@
   <link rel="preload" href="assets/fonts/libre-franklin-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/libre-caslon-text-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.className = 'js';</script>
   <script src="script.js" defer></script>
 </head>
 <body>
+
+<!-- Illustration set: original drawings in the logo colors. Reused across the page with <use>. -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-star" viewBox="0 0 24 24">
+      <path d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z" fill="#12A2DC"/>
+    </symbol>
+
+    <symbol id="i-bubble" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="18" stroke-width="2" vector-effect="non-scaling-stroke" style="fill: var(--bubble-fill, rgba(255, 255, 255, 0.7)); stroke: var(--bubble-line, #12A2DC)"/>
+      <path d="M10.5 17.5a10 10 0 0 1 7-7" fill="none" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke: var(--bubble-line, #12A2DC)"/>
+    </symbol>
+
+    <!-- Spray bottle, nozzle pointing left -->
+    <symbol id="i-bottle" viewBox="0 0 80 120">
+      <g stroke="#0A2B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M30 50c-8 3-13 10-13 20v36a9 9 0 0 0 9 9h30a9 9 0 0 0 9-9V70c0-10-5-17-13-20z" fill="#fff" stroke="none"/>
+        <path d="M17 84c8-4 16 4 24 0s16-4 24 0v22a9 9 0 0 1-9 9H26a9 9 0 0 1-9-9z" fill="#BFE3F5" stroke="none"/>
+        <path d="M30 50c-8 3-13 10-13 20v36a9 9 0 0 0 9 9h30a9 9 0 0 0 9-9V70c0-10-5-17-13-20z" fill="none" vector-effect="non-scaling-stroke"/>
+        <path d="M28 33c-7 2-12 8-13 17l6 1c1-6 3-9 7-11z" fill="#12A2DC" vector-effect="non-scaling-stroke"/>
+        <rect x="30" y="39" width="22" height="12" rx="3" fill="#0B6CB8" vector-effect="non-scaling-stroke"/>
+        <rect x="12" y="21" width="18" height="10" rx="3" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <path d="M28 40V26a8 8 0 0 1 8-8h16a8 8 0 0 1 8 8v4l-6 10z" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <rect x="7" y="19" width="6" height="14" rx="2" fill="#0A2B4E" vector-effect="non-scaling-stroke"/>
+      </g>
+      <path transform="translate(32.5 59) scale(0.7)" d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z" fill="#12A2DC"/>
+    </symbol>
+
+    <!-- Upright vacuum, facing right -->
+    <symbol id="i-vacuum" viewBox="0 0 150 150">
+      <g stroke="#0A2B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <g transform="rotate(-20 78 126)">
+          <rect x="75" y="12" width="6" height="30" rx="3" fill="#0A2B4E" vector-effect="non-scaling-stroke"/>
+          <rect x="71" y="-4" width="14" height="22" rx="7" fill="#12A2DC" vector-effect="non-scaling-stroke"/>
+          <rect x="72" y="102" width="12" height="28" rx="4" fill="#0A2B4E" vector-effect="non-scaling-stroke"/>
+          <rect x="60" y="36" width="36" height="76" rx="14" fill="#fff" vector-effect="non-scaling-stroke"/>
+          <rect x="67" y="48" width="22" height="38" rx="9" fill="#BFE3F5" vector-effect="non-scaling-stroke"/>
+          <path d="M61 96h34" fill="none" vector-effect="non-scaling-stroke"/>
+          <g fill="#6F9CBD" stroke="none">
+            <circle cx="74" cy="78" r="2"/><circle cx="81" cy="73" r="1.6"/><circle cx="79" cy="81" r="1.8"/><circle cx="74" cy="70" r="1.4"/>
+          </g>
+        </g>
+        <path d="M74 146h60a8 8 0 0 0 8-8c0-9-7-15-17-15H92c-10 0-18 7-18 16z" fill="#0B6CB8" vector-effect="non-scaling-stroke"/>
+        <path d="M126 132h7" fill="none" stroke="#fff" stroke-width="3" vector-effect="non-scaling-stroke"/>
+        <circle cx="89" cy="137" r="9" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <circle cx="89" cy="137" r="2.5" fill="#0A2B4E" stroke="none"/>
+      </g>
+    </symbol>
+
+    <symbol id="i-sponge" viewBox="0 0 80 56">
+      <g stroke="#0A2B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="6" y="14" width="68" height="20" rx="8" fill="#0B6CB8" vector-effect="non-scaling-stroke"/>
+        <rect x="6" y="24" width="68" height="27" rx="8" fill="#BFE3F5" vector-effect="non-scaling-stroke"/>
+        <g fill="#fff" stroke="none">
+          <circle cx="21" cy="36" r="2.6"/><circle cx="36" cy="42" r="2"/><circle cx="50" cy="35" r="2.6"/><circle cx="62" cy="43" r="1.8"/><circle cx="28" cy="45" r="1.5"/>
+        </g>
+      </g>
+    </symbol>
+
+    <symbol id="i-calendar" viewBox="0 0 120 120">
+      <g stroke="#0A2B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="10" y="20" width="100" height="92" rx="12" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <path d="M10 46V32a12 12 0 0 1 12-12h76a12 12 0 0 1 12 12v14z" fill="#0B6CB8" vector-effect="non-scaling-stroke"/>
+        <rect x="33" y="10" width="8" height="20" rx="4" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <rect x="79" y="10" width="8" height="20" rx="4" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <g fill="#9FB3C8" stroke="none">
+          <circle cx="30" cy="64" r="3"/><circle cx="70" cy="64" r="3"/><circle cx="90" cy="64" r="3"/>
+          <circle cx="30" cy="80" r="3"/><circle cx="50" cy="80" r="3"/><circle cx="70" cy="80" r="3"/><circle cx="90" cy="80" r="3"/>
+          <circle cx="30" cy="96" r="3"/><circle cx="70" cy="96" r="3"/><circle cx="90" cy="96" r="3"/>
+        </g>
+        <circle cx="50" cy="64" r="8" fill="#0A2B4E" stroke="none"/>
+        <circle cx="50" cy="96" r="8" fill="#0A2B4E" stroke="none"/>
+      </g>
+      <path transform="translate(54 51) scale(0.5)" d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z" fill="#12A2DC"/>
+      <path transform="translate(54 83) scale(0.5)" d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z" fill="#12A2DC"/>
+    </symbol>
+
+    <symbol id="i-box" viewBox="0 0 100 80">
+      <g stroke="#0A2B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="6" y="16" width="88" height="58" rx="5" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <path d="M6 32V21a5 5 0 0 1 5-5h78a5 5 0 0 1 5 5v11z" fill="#CFE6F5" vector-effect="non-scaling-stroke"/>
+        <rect x="43" y="16" width="14" height="26" fill="#12A2DC" vector-effect="non-scaling-stroke"/>
+        <rect x="38" y="54" width="24" height="7" rx="3.5" fill="#CFE6F5" vector-effect="non-scaling-stroke"/>
+      </g>
+    </symbol>
+
+    <symbol id="i-broom" viewBox="0 0 44 150">
+      <g stroke="#0A2B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="19.5" y="4" width="5" height="100" rx="2.5" fill="#0A2B4E" stroke="none"/>
+        <path d="M12 110h20l7 33a3 3 0 0 1-3 3.5H8a3 3 0 0 1-3-3.5z" fill="#fff" vector-effect="non-scaling-stroke"/>
+        <path d="M17 119l-3 27M22 119v27M27 119l3 27" fill="none" vector-effect="non-scaling-stroke"/>
+        <rect x="10" y="100" width="24" height="12" rx="3" fill="#0B6CB8" vector-effect="non-scaling-stroke"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
 <header class="site-header wrap">
   <a class="site-header__logo" href="#top">
@@ -63,6 +160,18 @@
       </div>
 
       <div class="scheduler">
+        <!-- Decoration: the bottle puffs when someone picks a schedule -->
+        <div class="spray" aria-hidden="true">
+          <svg class="spray__bottle" viewBox="0 0 80 120"><use href="#i-bottle"/></svg>
+          <span class="spray__mist">
+            <i style="--dx:-30px; --dy:-4px; --i:0"></i>
+            <i style="--dx:-46px; --dy:9px; --i:1"></i>
+            <i style="--dx:-38px; --dy:20px; --i:2"></i>
+            <i style="--dx:-62px; --dy:3px; --i:3"></i>
+            <i style="--dx:-56px; --dy:17px; --i:4"></i>
+            <i style="--dx:-74px; --dy:11px; --i:5"></i>
+          </span>
+        </div>
         <h2 class="scheduler__title">Try a schedule</h2>
 
         <div class="field-group" role="group" aria-labelledby="hero-freq">
@@ -103,6 +212,29 @@
 
         <p class="scheduler__summary" id="cal-summary" aria-live="polite"></p>
         <a class="btn btn--light" href="#quote" id="request-schedule">Request this schedule</a>
+      </div>
+    </div>
+    <!-- Decoration: the vacuum crosses as you scroll and leaves sparkles behind -->
+    <div class="sweep" aria-hidden="true">
+      <div class="wrap">
+        <div class="sweep__track">
+          <i class="sweep__dust" style="--x:17%"></i>
+          <i class="sweep__dust" style="--x:25%; --w:5px"></i>
+          <i class="sweep__dust" style="--x:36%"></i>
+          <i class="sweep__dust" style="--x:44%; --w:9px"></i>
+          <i class="sweep__dust" style="--x:53%; --w:5px"></i>
+          <i class="sweep__dust" style="--x:62%"></i>
+          <i class="sweep__dust" style="--x:71%; --w:9px"></i>
+          <i class="sweep__dust" style="--x:79%; --w:5px"></i>
+          <i class="sweep__dust" style="--x:87%"></i>
+          <i class="sweep__dust" style="--x:94%; --w:6px"></i>
+          <svg class="sweep__star" style="--x:9%; --y:22px; --s:14px" viewBox="0 0 24 24"><use href="#i-star"/></svg>
+          <svg class="sweep__star" style="--x:27%; --y:40px; --s:20px" viewBox="0 0 24 24"><use href="#i-star"/></svg>
+          <svg class="sweep__star" style="--x:45%; --y:16px; --s:12px" viewBox="0 0 24 24"><use href="#i-star"/></svg>
+          <svg class="sweep__star" style="--x:63%; --y:34px; --s:18px" viewBox="0 0 24 24"><use href="#i-star"/></svg>
+          <svg class="sweep__star" style="--x:80%; --y:18px; --s:13px" viewBox="0 0 24 24"><use href="#i-star"/></svg>
+          <svg class="sweep__vac" viewBox="0 0 150 150"><use href="#i-vacuum"/></svg>
+        </div>
       </div>
     </div>
   </section>
@@ -183,22 +315,60 @@
         <h2 class="h2">Ways to book</h2>
         <p class="lede">Every home is different, so we quote each one. Pick what you need and we’ll send you a free quote before anything is booked.</p>
       </div>
-      <div class="book-list">
-        <div class="book-row">
-          <h3 class="h3 book-row__name">Recurring cleaning</h3>
-          <p class="book-row__desc">Weekly, every two weeks or monthly, on the day you pick. Every visit is a full standard clean.</p>
-          <a class="btn btn--outline book-row__cta" href="#quote" data-service="recurring">Get a quote</a>
-        </div>
-        <div class="book-row">
-          <h3 class="h3 book-row__name">First deep clean</h3>
-          <p class="book-row__desc">We recommend one before recurring visits start. It gets the whole house to a level the regular visits can keep up.</p>
-          <a class="btn btn--outline book-row__cta" href="#quote" data-service="deep">Get a quote</a>
-        </div>
-        <div class="book-row">
-          <h3 class="h3 book-row__name">Move-in or move-out</h3>
-          <p class="book-row__desc">A deep clean of an empty home, with the inside of the cabinets, oven and fridge included.</p>
-          <a class="btn btn--outline book-row__cta" href="#quote" data-service="move">Get a quote</a>
-        </div>
+      <div class="services">
+        <article class="service">
+          <!-- To use a real photo instead of the drawing: replace the whole <svg>…</svg> with
+               <img src="assets/your-photo.jpg" alt="what the photo shows"> and delete aria-hidden="true" from this div -->
+          <div class="service__art" data-fx-scene data-reveal aria-hidden="true">
+            <svg class="art" viewBox="28 10 264 184" aria-hidden="true">
+              <ellipse cx="160" cy="181" rx="84" ry="7" fill="#D5E2ED"/>
+              <g data-fx-y="-10"><use href="#i-calendar" x="92" y="36" width="136" height="136"/></g>
+              <g data-fx-y="-34" data-fx-rot="50"><use href="#i-star" x="238" y="32" width="30" height="30"/></g>
+              <g data-fx-y="-22" data-fx-rot="-40"><use href="#i-star" x="56" y="60" width="18" height="18"/></g>
+              <g data-fx-y="-46"><use href="#i-bubble" x="48" y="120" width="30" height="30"/></g>
+              <g data-fx-y="-30"><use href="#i-bubble" x="252" y="108" width="20" height="20"/></g>
+            </svg>
+          </div>
+          <h3 class="h3 service__name">Recurring cleaning</h3>
+          <p class="service__desc">Weekly, every two weeks or monthly, on the day you pick. Every visit is a full standard clean.</p>
+          <a class="btn btn--outline service__cta" href="#quote" data-service="recurring">Get a quote</a>
+        </article>
+        <article class="service">
+          <div class="service__art" data-fx-scene data-reveal aria-hidden="true">
+            <svg class="art" viewBox="28 10 264 184" aria-hidden="true">
+              <ellipse cx="160" cy="181" rx="112" ry="7" fill="#D5E2ED"/>
+              <g data-fx-y="-8"><use href="#i-sponge" x="44" y="114" width="100" height="70"/></g>
+              <g data-fx-y="-14" data-fx-rot="-8"><use href="#i-bottle" x="188" y="36" width="96" height="144"/></g>
+              <g data-fx-x="-16" data-fx-y="-6" fill="#12A2DC">
+                <circle cx="180" cy="67" r="3"/><circle cx="166" cy="59" r="2.4"/><circle cx="164" cy="77" r="2.2"/>
+                <circle cx="150" cy="67" r="1.9"/><circle cx="148" cy="51" r="1.6"/><circle cx="146" cy="85" r="1.6"/>
+              </g>
+              <g data-fx-y="-50"><use href="#i-bubble" x="58" y="82" width="28" height="28"/></g>
+              <g data-fx-y="-70"><use href="#i-bubble" x="94" y="60" width="18" height="18"/></g>
+              <g data-fx-y="-36"><use href="#i-bubble" x="108" y="98" width="14" height="14"/></g>
+              <g data-fx-y="-30" data-fx-rot="60"><use href="#i-star" x="120" y="22" width="22" height="22"/></g>
+            </svg>
+          </div>
+          <h3 class="h3 service__name">First deep clean</h3>
+          <p class="service__desc">We recommend one before recurring visits start. It gets the whole house to a level the regular visits can keep up.</p>
+          <a class="btn btn--outline service__cta" href="#quote" data-service="deep">Get a quote</a>
+        </article>
+        <article class="service">
+          <div class="service__art" data-fx-scene data-reveal aria-hidden="true">
+            <svg class="art" viewBox="28 10 264 184" aria-hidden="true">
+              <ellipse cx="160" cy="181" rx="112" ry="7" fill="#D5E2ED"/>
+              <g data-fx-y="-6"><use href="#i-box" x="52" y="88" width="120" height="96"/></g>
+              <g data-fx-y="-14"><use href="#i-box" x="80" y="45" width="84" height="67.2"/></g>
+              <g data-fx-y="-10" data-fx-rot="8"><use href="#i-broom" x="218" y="24" width="46" height="156.8" transform="rotate(-8 241 177)"/></g>
+              <g data-fx-y="-36" data-fx-rot="50"><use href="#i-star" x="188" y="30" width="26" height="26"/></g>
+              <g data-fx-y="-24" data-fx-rot="-40"><use href="#i-star" x="40" y="52" width="16" height="16"/></g>
+              <g data-fx-y="-44"><use href="#i-bubble" x="270" y="76" width="22" height="22"/></g>
+            </svg>
+          </div>
+          <h3 class="h3 service__name">Move-in or move-out</h3>
+          <p class="service__desc">A deep clean of an empty home, with the inside of the cabinets, oven and fridge included.</p>
+          <a class="btn btn--outline service__cta" href="#quote" data-service="move">Get a quote</a>
+        </article>
       </div>
     </div>
   </section>
@@ -225,6 +395,19 @@
 
   <!-- Quote -->
   <section id="quote" class="section section--navy">
+    <!-- Decoration: soap bubbles along the top edge -->
+    <div class="suds" data-fx-scene aria-hidden="true">
+      <span class="suds__b" style="--x:3%; --s:24px; --o:-4px; --i:0" data-fx-y="-30"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:7.5%; --s:40px; --o:6px; --i:1" data-fx-y="-56"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:12.5%; --s:18px; --o:-12px; --i:2" data-fx-y="-24"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:17%; --s:12px; --o:4px; --i:3" data-fx-y="-40"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:34%; --s:14px; --o:-2px; --i:4" data-fx-y="-34"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:61%; --s:12px; --o:2px; --i:5" data-fx-y="-28"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:79%; --s:18px; --o:-10px; --i:6" data-fx-y="-30"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:84%; --s:38px; --o:4px; --i:7" data-fx-y="-60"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:89.5%; --s:22px; --o:-8px; --i:8" data-fx-y="-36"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+      <span class="suds__b" style="--x:94.5%; --s:30px; --o:8px; --i:9" data-fx-y="-48"><svg viewBox="0 0 40 40"><use href="#i-bubble"/></svg></span>
+    </div>
     <div class="wrap quote">
       <div class="quote__intro">
         <h2 class="h2">Get a free quote</h2>

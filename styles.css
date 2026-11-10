@@ -71,7 +71,7 @@ a:hover { color: var(--blue-dark); }
 .wrap { max-width: 1200px; margin-inline: auto; padding-inline: 32px; }
 .section { padding-block: 88px; }
 .section--mist { background: var(--mist); }
-.section--navy { background: var(--navy); color: var(--white); }
+.section--navy { position: relative; background: var(--navy); color: var(--white); }
 .stack-48 { display: flex; flex-direction: column; gap: 48px; }
 .stack-40 { display: flex; flex-direction: column; gap: 40px; }
 
@@ -168,9 +168,9 @@ a:hover { color: var(--blue-dark); }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 56px;
-  padding-top: 40px;
-  padding-bottom: 88px;
+  gap: 88px 56px; /* the row gap leaves room for the spray bottle when the card sits under the text */
+  padding-top: 56px;
+  padding-bottom: 40px;
 }
 .hero__copy { flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
 .hero__title {
@@ -202,6 +202,7 @@ a:hover { color: var(--blue-dark); }
   border-radius: 18px;
   background: var(--navy);
   color: var(--white);
+  position: relative;
 }
 .scheduler__title { font-family: var(--serif); font-weight: 700; font-size: 26px; line-height: 1.2; }
 .scheduler__label { font-size: 15px; color: var(--muted-on-navy); }
@@ -280,16 +281,24 @@ a:hover { color: var(--blue-dark); }
 .deep-legend::before { content: ""; width: 18px; height: 18px; flex: 0 0 auto; background: var(--star) center / contain no-repeat; }
 .includes--deep .deep-legend { display: flex; }
 
-/* Ways to book */
-.book-list { display: flex; flex-direction: column; border-bottom: 1px solid var(--rule); }
-.book-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-block: 28px; border-top: 1px solid var(--rule); }
-.book-row__name { font-size: 26px; }
-.book-row__desc { max-width: 34em; color: var(--muted); }
-.book-row__cta { justify-self: start; margin-top: 8px; }
-@media (min-width: 860px) {
-  .book-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) auto; column-gap: 40px; align-items: center; }
-  .book-row__cta { justify-self: end; margin-top: 0; }
+/* Ways to book: each service has an illustration, a short description and a quote button */
+.services { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 44px 32px; }
+.service { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.service__art {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: var(--mist);
+  overflow: hidden;
+  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 200ms ease-out;
 }
+.service__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.service__name { font-size: 26px; }
+.service__desc { flex: 1 0 auto; max-width: 34em; color: var(--muted); }
+.service__cta { margin-top: 8px; }
 
 /* About */
 .about { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 40px 80px; align-items: start; }
@@ -356,6 +365,83 @@ a:hover { color: var(--blue-dark); }
 .site-footer__logo { height: 64px; width: auto; display: block; }
 .site-footer__contact { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
 .site-footer__meta { display: flex; flex-direction: column; gap: 4px; font-size: 15px; color: var(--muted); }
+
+/* ---------- Illustrations and motion ----------
+   Drawings live in the hidden <svg class="sprite"> at the top of index.html.
+   script.js moves anything with data-fx-* as it crosses the screen. */
+.sprite { position: absolute; }
+.art { display: block; width: 100%; height: 100%; overflow: visible; }
+.art g[data-fx-y],
+.art g[data-fx-x],
+.art g[data-fx-rot] { transform-box: fill-box; transform-origin: center; }
+
+/* Illustrations pop in the first time they scroll into view (only when JavaScript is on) */
+.js [data-reveal] .art { opacity: 0; transform: translateY(16px) scale(0.95); }
+.js [data-reveal].is-in .art { opacity: 1; transform: none; transition: opacity 500ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.js .service:nth-child(2) [data-reveal].is-in .art { transition-delay: 90ms; }
+.js .service:nth-child(3) [data-reveal].is-in .art { transition-delay: 180ms; }
+
+/* Spray bottle standing on the schedule card */
+.spray { position: absolute; right: 30px; bottom: calc(100% - 4px); width: 48px; height: 72px; pointer-events: none; }
+.spray__bottle { display: block; width: 100%; height: 100%; transform-origin: 50% 96%; }
+.spray__mist { position: absolute; left: 6%; top: 22%; width: 0; height: 0; }
+.spray__mist i { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--sky); opacity: 0; }
+.spray__mist i:nth-child(even) { left: -2px; top: -2px; width: 4px; height: 4px; background: #7CC9EC; }
+.spray.is-spraying .spray__mist i { animation: puff 750ms cubic-bezier(0.2, 0.7, 0.3, 1) both; animation-delay: calc(var(--i) * 45ms); }
+.spray.is-spraying .spray__bottle { animation: squeeze 320ms ease-out; }
+@keyframes puff {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  25% { opacity: 0.95; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.7); }
+}
+@keyframes squeeze {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(-7deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Vacuum band under the hero */
+.sweep { overflow: hidden; }
+.sweep__track { position: relative; height: 136px; }
+.sweep__vac { position: absolute; left: 0; bottom: -2px; width: 132px; height: 132px; }
+.sweep__dust {
+  position: absolute;
+  left: var(--x);
+  bottom: 2px;
+  width: var(--w, 7px);
+  height: calc(var(--w, 7px) * 0.65);
+  border-radius: 50% 45% 55% 40%;
+  background: #9FB3C8;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.sweep__dust.is-gone { opacity: 0; transform: translateX(10px) scale(0.2); }
+.sweep__star {
+  position: absolute;
+  left: var(--x);
+  bottom: var(--y);
+  width: var(--s);
+  height: var(--s);
+  opacity: 0;
+  transform: scale(0.2) rotate(-40deg);
+  transition: opacity 250ms ease, transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sweep__star.is-on { opacity: 1; transform: none; }
+
+/* Soap bubbles along the top edge of the quote section */
+.suds { position: absolute; left: 0; right: 0; top: 0; height: 0; pointer-events: none; --bubble-fill: rgba(255, 255, 255, 0.14); }
+.suds__b {
+  --size: calc(var(--s) * 1.5);
+  position: absolute;
+  left: calc(var(--x) - var(--size) * 0.5);
+  top: calc(var(--size) * -0.5 + var(--o, 0px));
+  width: var(--size);
+  height: var(--size);
+}
+.suds__b svg { display: block; width: 100%; height: 100%; overflow: visible; animation: bob 5s ease-in-out infinite alternate; animation-delay: calc(var(--i, 0) * -0.9s); }
+@keyframes bob {
+  from { transform: translateY(-4px); }
+  to { transform: translateY(5px); }
+}
 
 /* Call / Text / Get a quote bar: phones only */
 .action-bar { display: none; }
@@ -427,7 +513,7 @@ a:hover { color: var(--blue-dark); }
   .stack-48 { gap: 32px; }
   .stack-40 { gap: 28px; }
 
-  .hero__inner { padding-top: 12px; padding-bottom: 56px; gap: 40px; }
+  .hero__inner { padding-top: 12px; padding-bottom: 24px; gap: 72px; }
   .hero__copy { gap: 20px; }
   .hero__title { font-size: 34px; line-height: 1.1; }
   .hero__lede { font-size: 18px; line-height: 1.55; }
@@ -436,6 +522,11 @@ a:hover { color: var(--blue-dark); }
   .facts__row { grid-template-columns: 6.2em minmax(0, 1fr); gap: 2px 12px; padding-block: 9px; }
 
   .scheduler { padding: 20px; gap: 16px; }
+  .spray { right: 22px; width: 36px; height: 54px; }
+  .sweep__track { height: 92px; }
+  .sweep__vac { width: 88px; height: 88px; }
+  .suds__b { --size: var(--s); }
+  .suds__b:nth-child(3n) { display: none; }
   .cal { padding: 14px 10px 10px; }
   .cal__day { height: 36px; }
   .chip--day { min-width: 48px; padding: 0 6px; }
@@ -469,8 +560,9 @@ a:hover { color: var(--blue-dark); }
   .room .h3 { font-size: 21px; }
   .room[open] .checklist { padding-bottom: 20px; }
 
-  .book-row { padding-block: 22px; }
-  .book-row__name { font-size: 23px; }
+  .services { gap: 36px; }
+  .service__art { aspect-ratio: 16 / 9; }
+  .service__name { font-size: 23px; }
 
   .about { gap: 32px; }
 
