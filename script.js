@@ -1,24 +1,27 @@
 /* R&S Cleaning Services homepage */
 
-// Where quote requests go. Put your business email between the quotes,
-// e.g. 'hello@rscleaning.com'. While it's empty, the form asks people
-// to call or text instead.
-const QUOTE_EMAIL = '';
+// Quote requests go to Formspree (form mqpqzpaa). The address is the form's
+// action in index.html; to switch forms, change it there.
 
 (function () {
   const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const FREQ_LABELS = {
     weekly: 'Weekly',
     biweekly: 'Every 2 weeks',
-    monthly: 'Monthly',
-    once: 'Just once'
+    monthly: 'Monthly'
+  };
+  const SERVICE_LABELS = {
+    recurring: 'Recurring cleaning',
+    deep: 'First deep clean',
+    move: 'Move-in or move-out'
   };
 
   const state = {
     freq: 'biweekly',     // schedule picker in the hero
     formFreq: 'biweekly', // "How often" in the quote form
     day: 4,               // 1 = Monday ... 5 = Friday
-    clean: 'standard'
+    clean: 'standard',
+    service: 'recurring'  // what the quote is for
   };
 
   /* ---------- Calendar: always shows next month ---------- */
@@ -111,6 +114,8 @@ const QUOTE_EMAIL = '';
       } else if (name === 'formFreq') {
         state.formFreq = value;
         syncGroup('formFreq', value);
+      } else if (name === 'service') {
+        setService(value);
       } else if (name === 'clean') {
         state.clean = value;
         syncGroup('clean', value);
@@ -121,6 +126,21 @@ const QUOTE_EMAIL = '';
 
   /* ---------- Quote form ---------- */
 
+  const freqGroup = document.getElementById('freq-group');
+  function setService(value) {
+    state.service = value;
+    syncGroup('service', value);
+    // "How often" only matters for recurring cleaning
+    freqGroup.hidden = value !== 'recurring';
+  }
+
+  // "Get a quote" buttons in Ways to book pick the matching service
+  document.querySelectorAll('[data-service]').forEach(function (link) {
+    link.addEventListener('click', function () { setService(link.dataset.service); });
+  });
+  // "Request this schedule" in the hero means recurring cleaning
+  document.getElementById('request-schedule').addEventListener('click', function () { setService('recurring'); });
+
   const form = document.getElementById('quote-form');
   const done = document.getElementById('form-done');
   const errorEl = document.getElementById('form-error');
@@ -130,55 +150,119 @@ const QUOTE_EMAIL = '';
     errorEl.hidden = false;
   }
 
+  const submitBtn = document.getElementById('quote-submit');
+  const doneTitle = document.getElementById('done-title');
+  const doneText = document.getElementById('done-text');
+
+  function showDone(title, text) {
+    doneTitle.textContent = title;
+    doneText.textContent = text;
+    form.hidden = true;
+    done.hidden = false;
+    done.focus();
+  }
+
+  function quoteDetails() {
+    const f = form.elements;
+    const details = {
+      'Service': SERVICE_LABELS[state.service],
+      'How often': state.service === 'recurring' ? FREQ_LABELS[state.formFreq] : 'One time',
+      'Preferred day': DAY_NAMES[state.day],
+      'ZIP code': f.zip.value.trim(),
+      'Bedrooms': f.bedrooms.value,
+      'Bathrooms': f.bathrooms.value,
+      'Notes': f.notes.value.trim() || 'none',
+      'Name': f.name.value.trim(),
+      'Phone': f.phone.value.trim()
+    };
+    if (f.email.value.trim()) details.email = f.email.value.trim(); // lets you hit Reply in Formspree emails
+    return details;
+  }
+
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     errorEl.hidden = true;
 
-    const name = form.elements.name;
-    const phone = form.elements.phone;
-    const email = form.elements.email;
+    // Required: ZIP (to check we cover the area), name and phone
+    const required = [
+      { input: form.elements.zip, label: 'ZIP code' },
+      { input: form.elements.name, label: 'name' },
+      { input: form.elements.phone, label: 'phone number' }
+    ];
+    const missing = [];
     let firstBad = null;
-    [name, phone].forEach(function (input) {
-      const bad = !input.value.trim();
-      input.setAttribute('aria-invalid', String(bad));
-      if (bad && !firstBad) firstBad = input;
+    required.forEach(function (field) {
+      const bad = !field.input.value.trim();
+      field.input.setAttribute('aria-invalid', String(bad));
+      if (bad) {
+        missing.push(field.label);
+        if (!firstBad) firstBad = field.input;
+      }
     });
     if (firstBad) {
-      showError('Add your name and phone number so we can text you a price.');
+      const list = missing.length === 1 ? missing[0]
+        : missing.slice(0, -1).join(', ') + ' and ' + missing[missing.length - 1];
+      showError('Add your ' + list + ' so we can text you a quote.');
       firstBad.focus();
       return;
     }
 
-    if (!QUOTE_EMAIL) {
-      showError('Online quote requests aren’t connected yet. Please call or text us for a price.');
+    const zip = form.elements.zip;
+    if (!/^[0-9]{5}$/.test(zip.value.trim())) {
+      zip.setAttribute('aria-invalid', 'true');
+      showError('Enter a 5-digit ZIP code.');
+      zip.focus();
       return;
     }
 
-    const lines = [
-      'Name: ' + name.value.trim(),
-      'Phone: ' + phone.value.trim(),
-      'Email: ' + (email.value.trim() || 'not given'),
-      'ZIP code: ' + (form.elements.zip.value.trim() || 'not given'),
-      'Bedrooms: ' + form.elements.bedrooms.value,
-      'Bathrooms: ' + form.elements.bathrooms.value,
-      'How often: ' + FREQ_LABELS[state.formFreq],
-      'Preferred day: ' + DAY_NAMES[state.day],
-      'Notes: ' + (form.elements.notes.value.trim() || 'none')
-    ];
-    const subject = 'Quote request from ' + name.value.trim();
-    window.location.href = 'mailto:' + QUOTE_EMAIL +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(lines.join('\n'));
+    const email = form.elements.email;
+    if (email.value.trim() && !email.checkValidity()) {
+      email.setAttribute('aria-invalid', 'true');
+      showError('That email doesn’t look right. Fix it or leave it empty.');
+      email.focus();
+      return;
+    }
+    email.setAttribute('aria-invalid', 'false');
 
-    form.hidden = true;
-    done.hidden = false;
+    const details = quoteDetails();
+    const firstName = details.Name.split(' ')[0];
+    const payload = Object.assign({
+      _subject: 'Quote request from ' + details.Name,
+      _gotcha: form.elements._gotcha.value
+    }, details);
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    fetch(form.getAttribute('action'), {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (response.ok) {
+          showDone('Quote request sent', 'Thanks, ' + firstName + '. We’ll text your quote to ' + details.Phone + '.');
+          return;
+        }
+        // Formspree explains what's wrong, e.g. a bad email address
+        const message = data && data.errors && data.errors.length
+          ? data.errors.map(function (err) { return err.message; }).join(' ')
+          : 'That didn’t go through.';
+        showError(message + ' Try again, or call or text us at (301) 525-1949.');
+      });
+    }).catch(function () {
+      showError('That didn’t go through. Check your connection and try again, or call or text us at (301) 525-1949.');
+    }).finally(function () {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get my free quote';
+    });
   });
 
   document.getElementById('form-reset').addEventListener('click', function () {
     form.reset();
     form.hidden = false;
     done.hidden = true;
-    form.elements.name.focus();
+    form.elements.zip.focus();
   });
 
   /* ---------- Phone menu ---------- */

@@ -10,7 +10,7 @@ Taken from the logo. Don't add new ones.
 
 | Name | Hex | Use |
 | --- | --- | --- |
-| Navy | `#0A2B4E` | Text, headings, top bar, schedule panel, quote section |
+| Navy | `#0A2B4E` | Text, headings, schedule panel, quote section |
 | Blue | `#0B6CB8` | Main buttons and links |
 | Sky | `#12A2DC` | The star from the logo only (calendar, deep clean items). Never for text or big areas |
 | Mist | `#EDF3F8` | Every other section background |
@@ -44,11 +44,19 @@ No gradients anywhere.
 - Emoji
 - Floating badges, fake chat bubbles, pop-ups
 
+## Quotes, not prices
+
+Never show prices, price ranges or "from $X" anywhere on the site. Every job is quoted, so point people to the free quote form instead.
+
+## Names
+
+Don't put the owners' names or photos of them anywhere on the site. Say "our family" or "a family business in Rockville" instead.
+
 ## Copy test
 
 Before adding any sentence, ask: **could a competitor put this on their site without changing a word?** If yes, rewrite it with a fact, or delete it.
 
-Good facts are a name, a price, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, leave a `[PLACEHOLDER]` and ask. Never invent one.
+Good facts are a name, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, leave a `[PLACEHOLDER]` and ask. Never invent one.
 
 ## Phones first
 
@@ -63,8 +71,8 @@ Most people find R&S on their phone. Design and check every change at 375px wide
 
 ## What the first screen must show
 
-1. Who runs it (Rodrigo and Sabrina)
+1. Who runs it (a family business in Rockville)
 2. Where (Rockville and nearby towns)
-3. What it costs (from $X a visit)
+3. How to get a free quote (the quote form)
 4. How soon you can start (first visit within X days)
-5. How to reach you (phone in the top bar, and the Call / Text bar on phones)
+5. How to reach you (phone next to the main button, and the Call / Text bar on phones)

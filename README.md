@@ -1,6 +1,6 @@
 # R&S Cleaning Services
 
-Homepage for R&S Cleaning Services, a home cleaning business in Rockville, Maryland, run by Rodrigo and Sabrina.
+Homepage for R&S Cleaning Services, a family-run home cleaning business in Rockville, Maryland.
 
 It's a plain static site: no build step, no framework. Open `index.html` in a browser to see it.
 
@@ -18,32 +18,46 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 
 ## Before it goes live
 
-Use find and replace in `index.html` for each placeholder. Replace every match, not just the visible ones: `[PHONE]` and `[EMAIL]` also sit inside the links that make the Call, Text and email buttons work on phones.
+Use find and replace in `index.html` for each placeholder. Replace every match, not just the visible ones: `[EMAIL]` also sits inside the email links.
 
-- `[PHONE]`: write it like `301-555-0123`. It's in the top bar, hero, quote section, footer and the phone Call / Text bar
+The phone number, (301) 525-1949, is already in. To change it, search `index.html` for `525-1949` (what people see) and `+13015251949` (the Call and Text links), and `script.js` for `525-1949` (form messages).
+
 - `[EMAIL]`: quote section and footer
-- `[PRICE]`: 4 spots (hero, and the 3 rows in Ways to book)
-- `[DAYS AND HOURS]`: top bar, for example "Mon to Fri, 8am to 6pm"
 - `[NUMBER]`: hero, how many days until the first visit after a quote
 
 Then:
 
-1. **Photo:** put a real photo of the two of you in `assets/` (for example `owners.jpg`, a phone photo is fine) and swap the `<div class="photo-slot">` in the About section for
-   `<img class="about__photo" src="assets/owners.jpg" alt="Rodrigo and Sabrina">`
-2. **Quote form:** open `script.js` and set `QUOTE_EMAIL` at the top to your business email. When someone sends the form, their email app opens with the request filled in, addressed to you. Until it's set, the form asks people to call or text.
-3. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
+1. **Quote form:** already connected to Formspree. Send a test request once the site is live (see below).
+2. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
 
 Before changing the design or copy, read `DESIGN.md`.
+
+## The quote form (Formspree)
+
+The site has no prices. People fill out the quote form and you text them a quote. The site can't send email by itself, so the form goes to Formspree, which emails each request to you. It's already connected to the Formspree form `mqpqzpaa` (the form's `action` in `index.html`). The free plan covers 50 requests a month.
+
+Each request comes in with the service, how often, preferred day, ZIP, bedrooms, bathrooms, notes, name and phone, with the subject "Quote request from (name)". If the customer gave an email, you can hit Reply.
+
+How it works: `script.js` sends the form in the background (Ajax), so the customer stays on the page and sees "Quote request sent". If JavaScript doesn't load, the form still posts to the same address as a plain HTML form and Formspree shows its own thank-you page.
+
+In the Formspree dashboard:
+
+- **Keep CAPTCHA off** for this form (Settings, under spam protection). The form sends in the background, and a CAPTCHA would block it. A hidden spam trap field (`_gotcha`) is built in instead.
+- **Notifications:** you can add a second email so you both get every request.
+- **Test it:** after the site is live, send one request yourself and check it lands in your inbox (it counts toward the 50).
+
+To use a different Formspree form, change the `action` on `<form id="quote-form">` in `index.html`.
 
 ## Check it on a real phone
 
 Most people find the business on their phone, so after each change open the live site on an iPhone and an Android phone and check:
 
-- The first screen shows who you are, the price and the Call / Text / Get a quote bar at the bottom
+- The first screen shows what you do, where, how to get a free quote and the Call / Text / Get a quote bar at the bottom
 - Tapping **Call** opens the dialer and **Text** opens messages, with your number filled in
 - **Menu** opens and closes, and the links jump to the right section
 - Tapping a room in "What every clean covers" opens and closes it
 - Typing in the quote form brings up the number pad for phone and ZIP, and the bottom bar gets out of the way
+- Sending a test quote request shows "Quote request sent" and the request lands in your inbox
 - Nothing makes you scroll sideways or pinch to read
 
 For a speed and accessibility report, open the live site in Chrome on a computer, then **More tools → Developer tools → Lighthouse**, pick **Mobile** and run it.
