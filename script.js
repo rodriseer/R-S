@@ -135,15 +135,16 @@ const QUOTE_EMAIL = '';
     errorEl.hidden = true;
 
     const name = form.elements.name;
-    const contact = form.elements.contact;
+    const phone = form.elements.phone;
+    const email = form.elements.email;
     let firstBad = null;
-    [name, contact].forEach(function (input) {
+    [name, phone].forEach(function (input) {
       const bad = !input.value.trim();
       input.setAttribute('aria-invalid', String(bad));
       if (bad && !firstBad) firstBad = input;
     });
     if (firstBad) {
-      showError('Add your name and a phone number or email so we can send your price.');
+      showError('Add your name and phone number so we can text you a price.');
       firstBad.focus();
       return;
     }
@@ -155,7 +156,8 @@ const QUOTE_EMAIL = '';
 
     const lines = [
       'Name: ' + name.value.trim(),
-      'Phone or email: ' + contact.value.trim(),
+      'Phone: ' + phone.value.trim(),
+      'Email: ' + (email.value.trim() || 'not given'),
       'ZIP code: ' + (form.elements.zip.value.trim() || 'not given'),
       'Bedrooms: ' + form.elements.bedrooms.value,
       'Bathrooms: ' + form.elements.bathrooms.value,
@@ -177,6 +179,55 @@ const QUOTE_EMAIL = '';
     form.hidden = false;
     done.hidden = true;
     form.elements.name.focus();
+  });
+
+  /* ---------- Phone menu ---------- */
+
+  const menuBtn = document.querySelector('.menu-btn');
+  const nav = document.getElementById('main-nav');
+  function setMenu(open) {
+    menuBtn.setAttribute('aria-expanded', String(open));
+    nav.classList.toggle('nav--open', open);
+  }
+  menuBtn.addEventListener('click', function () {
+    setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+  });
+  nav.addEventListener('click', function (event) {
+    if (event.target.closest('a')) setMenu(false);
+  });
+
+  /* ---------- Room checklists: folded on phones, always open on wider screens ---------- */
+
+  const phoneQuery = window.matchMedia('(max-width: 560px)');
+  const rooms = Array.prototype.slice.call(document.querySelectorAll('.room'));
+  function setupRooms() {
+    rooms.forEach(function (room, i) {
+      const summary = room.querySelector('summary');
+      if (phoneQuery.matches) {
+        room.open = i === 0;
+        summary.removeAttribute('tabindex');
+      } else {
+        room.open = true;
+        summary.setAttribute('tabindex', '-1');
+      }
+    });
+  }
+  rooms.forEach(function (room) {
+    room.querySelector('summary').addEventListener('click', function (event) {
+      if (!phoneQuery.matches) event.preventDefault();
+    });
+  });
+  if (phoneQuery.addEventListener) phoneQuery.addEventListener('change', setupRooms);
+  setupRooms();
+
+  /* ---------- Contact bar: get out of the way while someone is typing ---------- */
+
+  const actionBar = document.querySelector('.action-bar');
+  document.addEventListener('focusin', function (event) {
+    if (event.target.matches('input, select, textarea')) actionBar.classList.add('action-bar--hidden');
+  });
+  document.addEventListener('focusout', function (event) {
+    if (event.target.matches('input, select, textarea')) actionBar.classList.remove('action-bar--hidden');
   });
 
   /* ---------- Small things ---------- */

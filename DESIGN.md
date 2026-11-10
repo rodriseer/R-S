@@ -50,10 +50,21 @@ Before adding any sentence, ask: **could a competitor put this on their site wit
 
 Good facts are a name, a price, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, leave a `[PLACEHOLDER]` and ask. Never invent one.
 
+## Phones first
+
+Most people find R&S on their phone. Design and check every change at 375px wide before looking at desktop.
+
+- Text: body at least 16px, form fields at least 16px (smaller makes iPhones zoom in when you tap a field)
+- Tap targets: at least 44px tall, 48px for anything in the bottom bar or menu
+- The phone number is always a tap-to-call link (`tel:`), and the Call / Text / Get a quote bar stays at the bottom on phones
+- No pop-ups, cookie walls or chat bubbles covering the page
+- Keep it light: fonts stay self-hosted, logos stay WebP, and any photo you add should be under 200 KB and no wider than 1600px
+- Long lists fold up on phones (like the room checklists) instead of making people scroll past them
+
 ## What the first screen must show
 
 1. Who runs it (Rodrigo and Sabrina)
 2. Where (Rockville and nearby towns)
 3. What it costs (from $X a visit)
 4. How soon you can start (first visit within X days)
-5. How to reach you (phone in the top bar)
+5. How to reach you (phone in the top bar, and the Call / Text bar on phones)

@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A2B4E">
   <title>R&amp;S Cleaning Services | House cleaning in Rockville, MD</title>
   <meta name="description" content="Weekly, every-other-week and monthly home cleaning in Rockville and across Montgomery County, Maryland. Owner-run by Rodrigo and Sabrina.">
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/libre-franklin-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/libre-caslon-text-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
@@ -17,7 +17,7 @@
 
 <div class="topbar">
   <div class="wrap topbar__inner">
-    <p>Call or text <span class="placeholder">[PHONE]</span></p>
+    <p class="topbar__phone">Call or text <a href="tel:[PHONE]"><span class="placeholder">[PHONE]</span></a></p>
     <p>Open <span class="placeholder">[DAYS AND HOURS]</span></p>
     <p lang="pt">Falamos português</p>
   </div>
@@ -25,9 +25,16 @@
 
 <header class="site-header wrap">
   <a class="site-header__logo" href="#top">
-    <img src="assets/rs-logo.png" alt="R&amp;S Cleaning Services" width="900" height="482">
+    <picture>
+      <source srcset="assets/rs-logo-220.webp 220w, assets/rs-logo.webp 360w" sizes="(max-width: 760px) 105px, 150px" type="image/webp">
+      <img src="assets/rs-logo.png" alt="R&amp;S Cleaning Services" width="360" height="193" fetchpriority="high">
+    </picture>
   </a>
-  <nav class="nav" aria-label="Main">
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    Menu
+  </button>
+  <nav class="nav" id="main-nav" aria-label="Main">
     <a href="#includes">What we clean</a>
     <a href="#prices">Prices</a>
     <a href="#about">About us</a>
@@ -42,7 +49,7 @@
     <div class="wrap hero__inner">
       <div class="hero__copy">
         <h1 class="hero__title">House cleaning in Rockville, run by Rodrigo and Sabrina.</h1>
-        <p class="hero__lede">Pick a day once and we come back on it every week, every two weeks or once a month. From the first quote to every visit after, you deal with the two of us, not a call center.</p>
+        <p class="hero__lede">Pick a day once and we come back on it every week, every two weeks or once a month. You deal with the two of us, not a call center.</p>
         <dl class="facts">
           <div class="facts__row">
             <dt>Price</dt>
@@ -59,7 +66,7 @@
         </dl>
         <div class="hero__actions">
           <a class="btn btn--large" href="#quote">Get a free quote</a>
-          <p>or call or text <span class="placeholder">[PHONE]</span></p>
+          <p>or call or text <a href="tel:[PHONE]"><span class="placeholder">[PHONE]</span></a></p>
         </div>
       </div>
 
@@ -78,11 +85,11 @@
         <div class="field-group" role="group" aria-labelledby="hero-day">
           <p id="hero-day" class="scheduler__label">Day of the week</p>
           <div class="chips" data-group="day">
-            <button type="button" class="chip chip--dark chip--day" data-value="1" aria-pressed="false" aria-label="Monday">Mon</button>
-            <button type="button" class="chip chip--dark chip--day" data-value="2" aria-pressed="false" aria-label="Tuesday">Tue</button>
-            <button type="button" class="chip chip--dark chip--day" data-value="3" aria-pressed="false" aria-label="Wednesday">Wed</button>
-            <button type="button" class="chip chip--dark chip--day" data-value="4" aria-pressed="true" aria-label="Thursday">Thu</button>
-            <button type="button" class="chip chip--dark chip--day" data-value="5" aria-pressed="false" aria-label="Friday">Fri</button>
+            <button type="button" class="chip chip--dark chip--day" data-value="1" aria-pressed="false">Mon<span class="sr-only">day</span></button>
+            <button type="button" class="chip chip--dark chip--day" data-value="2" aria-pressed="false">Tue<span class="sr-only">sday</span></button>
+            <button type="button" class="chip chip--dark chip--day" data-value="3" aria-pressed="false">Wed<span class="sr-only">nesday</span></button>
+            <button type="button" class="chip chip--dark chip--day" data-value="4" aria-pressed="true">Thu<span class="sr-only">rsday</span></button>
+            <button type="button" class="chip chip--dark chip--day" data-value="5" aria-pressed="false">Fri<span class="sr-only">day</span></button>
           </div>
         </div>
 
@@ -123,8 +130,8 @@
       </div>
 
       <div class="rooms">
-        <div class="room">
-          <h3 class="h3">Kitchen</h3>
+        <details class="room" open>
+          <summary class="room__head"><h3 class="h3">Kitchen</h3></summary>
           <ul class="checklist">
             <li>Counters and backsplash wiped down</li>
             <li>Sink and faucet scrubbed and shined</li>
@@ -138,9 +145,9 @@
             <li class="is-deep">Cabinet fronts wiped top to bottom<span class="sr-only"> (deep clean)</span></li>
             <li class="is-deep">Range hood and filter degreased<span class="sr-only"> (deep clean)</span></li>
           </ul>
-        </div>
-        <div class="room">
-          <h3 class="h3">Bathrooms</h3>
+        </details>
+        <details class="room" open>
+          <summary class="room__head"><h3 class="h3">Bathrooms</h3></summary>
           <ul class="checklist">
             <li>Toilet cleaned inside and out, base included</li>
             <li>Shower, tub and tile scrubbed</li>
@@ -153,9 +160,9 @@
             <li class="is-deep">Cabinet fronts and baseboards wiped<span class="sr-only"> (deep clean)</span></li>
             <li class="is-deep">Exhaust fan cover dusted<span class="sr-only"> (deep clean)</span></li>
           </ul>
-        </div>
-        <div class="room">
-          <h3 class="h3">Bedrooms and living areas</h3>
+        </details>
+        <details class="room" open>
+          <summary class="room__head"><h3 class="h3">Bedrooms and living areas</h3></summary>
           <ul class="checklist">
             <li>Every surface we can reach dusted</li>
             <li>Mirrors and glass cleaned</li>
@@ -167,7 +174,7 @@
             <li class="is-deep">Window sills and tracks<span class="sr-only"> (deep clean)</span></li>
             <li class="is-deep">Under furniture we can safely move<span class="sr-only"> (deep clean)</span></li>
           </ul>
-        </div>
+        </details>
       </div>
 
       <div class="includes__notes">
@@ -234,26 +241,30 @@
             <li>We book your first clean, then come back on your day.</li>
           </ol>
         </div>
-        <p class="quote__alt">Rather talk? Call or text <span class="placeholder">[PHONE]</span> or email <span class="placeholder">[EMAIL]</span></p>
+        <p class="quote__alt">Rather talk? Call or text <a href="tel:[PHONE]"><span class="placeholder">[PHONE]</span></a> or email <a href="mailto:[EMAIL]"><span class="placeholder">[EMAIL]</span></a></p>
       </div>
 
       <div class="form-card">
         <form id="quote-form" class="quote-form" novalidate>
-          <div class="form-row form-row--2">
+          <div class="form-row form-row--contact">
             <div class="field">
               <label for="q-name">Your name</label>
-              <input id="q-name" name="name" type="text" autocomplete="name" required>
+              <input id="q-name" name="name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" required>
             </div>
             <div class="field">
-              <label for="q-contact">Phone or email</label>
-              <input id="q-contact" name="contact" type="text" autocomplete="tel" required>
+              <label for="q-phone">Phone</label>
+              <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+            </div>
+            <div class="field">
+              <label for="q-email">Email <span class="optional">(optional)</span></label>
+              <input id="q-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
             </div>
           </div>
 
           <div class="form-row form-row--3">
             <div class="field">
               <label for="q-zip">ZIP code</label>
-              <input id="q-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="10">
+              <input id="q-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="postal-code" maxlength="5">
             </div>
             <div class="field">
               <label for="q-bed">Bedrooms</label>
@@ -289,17 +300,17 @@
           <div class="field-group" role="group" aria-labelledby="q-day">
             <p id="q-day" class="field-label">Preferred day</p>
             <div class="chips" data-group="day">
-              <button type="button" class="chip chip--day" data-value="1" aria-pressed="false" aria-label="Monday">Mon</button>
-              <button type="button" class="chip chip--day" data-value="2" aria-pressed="false" aria-label="Tuesday">Tue</button>
-              <button type="button" class="chip chip--day" data-value="3" aria-pressed="false" aria-label="Wednesday">Wed</button>
-              <button type="button" class="chip chip--day" data-value="4" aria-pressed="true" aria-label="Thursday">Thu</button>
-              <button type="button" class="chip chip--day" data-value="5" aria-pressed="false" aria-label="Friday">Fri</button>
+              <button type="button" class="chip chip--day" data-value="1" aria-pressed="false">Mon<span class="sr-only">day</span></button>
+              <button type="button" class="chip chip--day" data-value="2" aria-pressed="false">Tue<span class="sr-only">sday</span></button>
+              <button type="button" class="chip chip--day" data-value="3" aria-pressed="false">Wed<span class="sr-only">nesday</span></button>
+              <button type="button" class="chip chip--day" data-value="4" aria-pressed="true">Thu<span class="sr-only">rsday</span></button>
+              <button type="button" class="chip chip--day" data-value="5" aria-pressed="false">Fri<span class="sr-only">day</span></button>
             </div>
           </div>
 
           <div class="field">
             <label for="q-notes">Anything we should know?</label>
-            <textarea id="q-notes" name="notes" rows="3" placeholder="Pets, parking, a room to skip"></textarea>
+            <textarea id="q-notes" name="notes" rows="3" enterkeyhint="done" placeholder="Pets, parking, a room to skip"></textarea>
           </div>
 
           <p class="form-error" id="form-error" role="alert" hidden></p>
@@ -309,7 +320,7 @@
         <div class="form-done" id="form-done" role="status" hidden>
           <svg class="form-done__star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1C12.9 7 17 11.1 23 12C17 12.9 12.9 17 12 23C11.1 17 7 12.9 1 12C7 11.1 11.1 7 12 1Z"/></svg>
           <h3 class="h3 form-done__title">Almost done</h3>
-          <p>Your email app opened with your request filled in. Hit send, and we’ll text or email you a price.</p>
+          <p>Your email app opened with your request filled in. Hit send, and we’ll text you a price.</p>
           <button type="button" class="btn btn--outline" id="form-reset">Start a new request</button>
         </div>
       </div>
@@ -320,10 +331,13 @@
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
-    <img class="site-footer__logo" src="assets/rs-logo.png" alt="R&amp;S Cleaning Services" width="900" height="482">
+    <picture>
+      <source srcset="assets/rs-logo-220.webp 220w, assets/rs-logo.webp 360w" sizes="120px" type="image/webp">
+      <img class="site-footer__logo" src="assets/rs-logo.png" alt="R&amp;S Cleaning Services" width="360" height="193" loading="lazy" decoding="async">
+    </picture>
     <div class="site-footer__contact">
-      <p>Call or text <span class="placeholder">[PHONE]</span></p>
-      <p>Email <span class="placeholder">[EMAIL]</span></p>
+      <p>Call or text <a href="tel:[PHONE]"><span class="placeholder">[PHONE]</span></a></p>
+      <p>Email <a href="mailto:[EMAIL]"><span class="placeholder">[EMAIL]</span></a></p>
     </div>
     <div class="site-footer__meta">
       <p>Home cleaning in Rockville and Montgomery County, Maryland</p>
@@ -331,6 +345,19 @@
     </div>
   </div>
 </footer>
+
+<!-- Phones only: always-visible call, text and quote buttons -->
+<nav class="action-bar" aria-label="Contact">
+  <a class="action-bar__btn" href="tel:[PHONE]">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.5a12 12 0 0 0 6.4 6.4l1.5-2 4 1.4v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg>
+    Call
+  </a>
+  <a class="action-bar__btn" href="sms:[PHONE]">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+    Text
+  </a>
+  <a class="action-bar__btn action-bar__btn--primary" href="#quote">Get a quote</a>
+</nav>
 
 </body>
 </html>
