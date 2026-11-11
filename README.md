@@ -1,6 +1,6 @@
-# R&S Cleaning Services
+# Connect Cleaning
 
-Homepage for R&S Cleaning Services, a family-run home cleaning business in Rockville, Maryland.
+Homepage for Connect Cleaning, a family-run home cleaning business in Rockville, Maryland. (The site was first built under the name R&S Cleaning Services, which is why the repo is called `R-S`.)
 
 It's a plain static site: no build step, no framework. Open `index.html` in a browser to see it.
 
@@ -9,11 +9,11 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 | File | What it is |
 | --- | --- |
 | `index.html` | The page, all its text and the drawings (the hidden `<svg class="sprite">` at the top) |
-| `styles.css` | Colors, fonts and layout (colors are taken from the logo) |
+| `styles.css` | Colors, fonts and layout. The green, blue and navy are taken from the logo |
 | `script.js` | The schedule picker, the standard/deep clean switch, the quote form and the scroll effects |
-| `assets/rs-logo.webp`, `rs-logo-220.webp`, `rs-logo.png` | Logo with a clear background, in sizes for phones and desktop (the PNG is a fallback for old browsers) |
-| `assets/favicon-32.png`, `apple-touch-icon.png` | Browser tab icon, and the icon an iPhone uses if someone adds the site to their home screen |
-| `assets/fonts/` | The two fonts, served from this site so phones don't wait on Google Fonts |
+| `assets/connect-logo.webp`, `connect-logo-280.webp`, `connect-logo.png` | The Connect Cleaning logo with a clear background, in sizes for phones and desktop (the PNG is a fallback for old browsers). It only works on white or light backgrounds |
+| `assets/favicon-32.png`, `apple-touch-icon.png` | Browser tab icon and iPhone home-screen icon: the C from the logo with its green sparkle |
+| `assets/fonts/` | Montserrat (headings, matches the logo lettering) and Figtree (text), served from this site so phones don't wait on Google Fonts |
 | `DESIGN.md` | Design rules for this site, including what not to do (give it to any AI tool you use to edit the site) |
 
 ## Before it goes live
@@ -57,6 +57,8 @@ The cleaning drawings are part of the page, not image files, so they load instan
 - **The spray bottle** on the schedule card puffs when someone picks a schedule
 - **The vacuum** under the hero crosses the page once, at the pace you scroll, and leaves sparkles where the dust was
 - **The three service drawings** fade in as you scroll to them, drift a little, and tilt toward the mouse on a computer
+- **The supplies lineup** under Ways to book (bleach, glass cleaner, paper towels, detergent, degreaser) pops up one product at a time as you scroll
+- **The room icons** in the checklist (degreaser, bleach, vacuum) hop when a room is opened
 - **The bubbles** along the top of the quote section drift at different speeds as you scroll
 
 Nothing moves by itself: everything follows scrolling or a tap. People who turn off motion on their phone or computer see everything standing still.
@@ -65,7 +67,9 @@ Nothing moves by itself: everything follows scrolling or a tap. People who turn 
 
 **Change how the motion feels:** three numbers near the top of the effects part of `script.js` control all of it. `EASE` is how quickly things catch up with your scrolling (smaller is softer), `DRIFT` is how far parts travel, and `TURN` is how far they rotate.
 
-**Change how far one part moves:** each moving part has `data-fx-y` (up and down), `data-fx-x` (sideways) or `data-fx-rot` (degrees of turn). Bigger numbers move more; delete the attribute to keep that part still.
+**Change how far one part moves:** each moving part has `data-fx-y` (up and down), `data-fx-x` (sideways) or `data-fx-rot` (degrees of turn). Bigger numbers move more; delete the attribute to keep that part still. Parts with `data-fx-rise` pop up from below in number order (0 first).
+
+**The products are generic on purpose.** The bleach, glass cleaner and detergent are plain drawings with no brand names or brand labels. Don't add real brands' logos or packaging to the site.
 
 ## Check it on a real phone
 

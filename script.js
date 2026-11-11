@@ -1,4 +1,4 @@
-/* R&S Cleaning Services homepage */
+/* Connect Cleaning homepage */
 
 // Quote requests go to Formspree (form mqpqzpaa). The address is the form's
 // action in index.html; to switch forms, change it there.
@@ -347,21 +347,26 @@
   // A scene is a [data-fx-scene] block. Inside it, anything with data-fx-y / data-fx-x (distance)
   // or data-fx-rot (degrees) drifts or turns by that much while the scene crosses the screen.
   // Scenes with [data-reveal] also fade their drawing in as they come up from the bottom.
+  // Parts with data-fx-rise (0, 1, 2...) pop up from below one after another, in that order.
   const scenes = Array.prototype.slice.call(document.querySelectorAll('[data-fx-scene]')).map(function (host, index) {
-    const parts = Array.prototype.slice.call(host.querySelectorAll('[data-fx-y], [data-fx-x], [data-fx-rot]')).map(function (el) {
+    const parts = Array.prototype.slice.call(host.querySelectorAll('[data-fx-y], [data-fx-x], [data-fx-rot], [data-fx-rise]')).map(function (el) {
       return {
         el: el,
         x: Number(el.dataset.fxX) || 0,
         y: Number(el.dataset.fxY) || 0,
         rot: Number(el.dataset.fxRot) || 0,
+        rise: el.dataset.fxRise === undefined ? null : Number(el.dataset.fxRise),
         inSvg: !!el.ownerSVGElement
       };
     });
+    const art = host.hasAttribute('data-reveal') ? host.querySelector('.art') : null;
     return {
       host: host,
       parts: parts,
-      art: host.hasAttribute('data-reveal') ? host.querySelector('.art') : null,
-      lag: (index % 3) * 0.05, // drawings side by side come in one after another
+      art: art,
+      risers: parts.filter(function (part) { return part.rise !== null; }).length,
+      span: Number(host.dataset.fxSpan) || 0.4, // how much of the screen height the entrance is spread over
+      lag: art ? (index % 3) * 0.05 : 0, // drawings side by side come in one after another
       visible: !hasIO,
       pass: null,   // -0.5 (just coming in at the bottom) to 0.5 (leaving at the top)
       entry: null   // 0 (not in yet) to 1 (fully in)
@@ -391,6 +396,14 @@
   function drawScene(scene) {
     const p = scene.pass;
     scene.parts.forEach(function (part) {
+      if (part.rise !== null) {
+        // Each one starts a little after the one before it, comes up fast and settles gently
+        const t = clamp01(scene.entry * (1 + (scene.risers - 1) * 0.3) - part.rise * 0.3);
+        const up = 1 - Math.pow(1 - t, 3);
+        const lean = (1 - up) * (part.rise % 2 ? 10 : -10);
+        part.el.style.transform = 'translateY(' + ((1 - up) * 108).toFixed(1) + '%) rotate(' + lean.toFixed(1) + 'deg)';
+        return;
+      }
       // Parts inside a drawing already shrink with it; plain elements move less on phones
       const k = DRIFT * (part.inSvg ? 1 : (phoneQuery.matches ? 0.6 : 1));
       part.el.style.transform = 'translate(' + (part.x * p * k).toFixed(2) + 'px, ' + (part.y * p * k).toFixed(2) + 'px) rotate(' + (part.rot * p * TURN).toFixed(2) + 'deg)';
@@ -420,7 +433,7 @@
       if (!scene.visible) return;
       const box = scene.host.getBoundingClientRect();
       const passTarget = clamp01((bottom - box.top) / (bottom + box.height)) - 0.5;
-      const entryTarget = clamp01((bottom - box.top) / (viewportHeight * 0.4) - scene.lag);
+      const entryTarget = clamp01((bottom - box.top) / (viewportHeight * scene.span) - scene.lag);
       scene.pass = ease(scene.pass, passTarget);
       scene.entry = ease(scene.entry, entryTarget);
       if (scene.pass !== passTarget || scene.entry !== entryTarget) moving = true;
