@@ -9,7 +9,7 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 | File | What it is |
 | --- | --- |
 | `index.html` | The page, all its text and the drawings (the hidden `<svg class="sprite">` at the top) |
-| `styles.css` | Colors, fonts and layout. The green, blue and navy are taken from the logo |
+| `styles.css` | Colors, fonts and layout. The four brand colors are listed at the top of the file and in `DESIGN.md` |
 | `script.js` | The schedule picker, the standard/deep clean switch, the quote form and the scroll effects |
 | `assets/connect-logo.webp`, `connect-logo-280.webp`, `connect-logo.png` | The Connect Cleaning logo with a clear background, in sizes for phones and desktop (the PNG is a fallback for old browsers). It only works on white or light backgrounds |
 | `assets/favicon-32.png`, `apple-touch-icon.png` | Browser tab icon and iPhone home-screen icon: the C from the logo with its green sparkle |

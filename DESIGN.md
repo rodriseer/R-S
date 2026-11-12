@@ -6,21 +6,29 @@ The site should only be able to belong to Connect Cleaning. Every change gets ch
 
 ## Colors
 
-Taken from the Connect Cleaning logo: clean green, clean blue and white, with the navy of the wordmark for text. Don't add new ones.
+Four brand colors: baby blue, light green, charcoal and white. Don't add new ones.
 
 | Name | Hex | Use |
 | --- | --- | --- |
 | White | `#FFFFFF` | Page background, cards |
-| Clean blue | `#0670B5` | Big blocks (schedule card, quote section), links, picked choices. Text on it is white |
-| Clean green | `#5FB322` | Main buttons, sparkles, the rules above lists, fills in drawings. Text on it is navy, never white |
-| Deep green | `#1B8424` | Small green marks on light backgrounds (the deep clean star) |
-| Navy | `#013363` | Text, headings, outlines of drawings |
-| Pale blue | `#EDF5FB` | Checklist section, drawing panels |
-| Pale green | `#F0F7E9` | About section |
-| Muted | `#4A5D72` | Secondary text on white or pale backgrounds |
+| Baby blue | `#48A9E6` | Big blocks (schedule card, quote section), picked choices, check marks, the underline on links |
+| Light green | `#9BCB50` | Main buttons, sparkles, the rules above lists, fills in drawings |
+| Charcoal | `#566166` | Text, headings, links, outlines of drawings |
 
-- **Buttons:** the main button is green with navy text. White text on the green fails the contrast check, so don't use it
-- **Blue blocks:** all text on them is white or `#E8F3FB`. The logo is navy, so it never goes on a blue block
+Shades made from those four, each for one job:
+
+| Name | Hex | Use |
+| --- | --- | --- |
+| Ink (darker charcoal) | `#2B3033` | Words that sit on the baby blue or the light green |
+| Pale blue | `#EDF6FC` | Checklist section, drawing panels |
+| Pale green | `#F1F8E6` | About section |
+| Box edge | `#858D91` | Borders of form fields and outline buttons |
+
+- **Words on blue or green are ink, never white or charcoal.** White on the baby blue scores 2.6 to 1 and charcoal 2.5 to 1, and white on the green 1.9 to 1. All are below the 4.5 to 1 needed to read small text, so they wash out on a phone in daylight. Ink scores 5.1 on the blue and 7.0 on the green
+- **Baby blue and light green are never used for words on white.** They are too pale to read. Links are charcoal with a baby blue underline
+- **Buttons:** the main button is light green with ink text
+- **Blue blocks:** all text on them is ink. Cards on a blue block are white with charcoal text
+- **The logo** is the one thing with its own colors (its original darker blue, green and navy). It only ever sits on white
 - No gradients anywhere
 
 ## Type
@@ -40,7 +48,7 @@ Taken from the Connect Cleaning logo: clean green, clean blue and white, with th
 
 The drawings (glass cleaner, degreaser, bleach, detergent, paper towels, vacuum, sponge, calendar, boxes, broom, bubbles, star) were made for this site. They live in the hidden `<svg class="sprite">` at the top of `index.html` and are reused with `<use>`.
 
-- **Style:** flat shapes, 2px navy outline, filled only with white, the blue and green above, and pale blue or pale green (`#CFE6F5`, `#9FD0F0`, `#C6E7AC`). No gradients, no shadows, no other colors. A new drawing has to look like it belongs to the same set
+- **Style:** flat shapes, 2px charcoal outline, filled only with white, the blue and green above, and pale blue or pale green (`#D1EAF9`, `#A4D4F2`, `#CDE5A8`). No gradients, no shadows, no other colors. A new drawing has to look like it belongs to the same set
 - **No real brands:** products are generic (a bleach jug, a glass cleaner bottle). Never draw another company's logo, label or packaging, and never write a brand name on a product
 - **Where they go:** in their own space (the service panels, the vacuum band, the supplies lineup, the edge of a section, on top of the schedule card, beside a room name). Never behind or over text
 - **Motion follows the person:** things move only when someone scrolls or taps. The bottle sprays when a schedule is picked, the vacuum crosses at the pace of the scroll, drawings fade in as they come up. Nothing plays on a loop, and nothing races ahead of the scroll
