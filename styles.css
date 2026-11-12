@@ -77,7 +77,7 @@ a:hover { color: var(--blue-dark); }
 }
 
 /* Layout helpers */
-.wrap { max-width: 1200px; margin-inline: auto; padding-inline: 32px; }
+.wrap { max-width: 1200px; margin-inline: auto; padding-left: max(32px, env(safe-area-inset-left)); padding-right: max(32px, env(safe-area-inset-right)); }
 .section { padding-block: 88px; }
 .section--tint-blue { background: var(--tint-blue); }
 .section--tint-green { background: var(--tint-green); }
@@ -129,7 +129,7 @@ a:hover { color: var(--blue-dark); }
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, transform 80ms ease;
 }
 .btn:hover { background: var(--green-light); color: var(--navy); }
 .btn--small { min-height: 44px; padding: 0 20px; font-size: 16px; }
@@ -138,6 +138,18 @@ a:hover { color: var(--blue-dark); }
 .btn--light:hover { background: #DDEDF8; color: var(--navy); }
 .btn--outline { background: var(--white); color: var(--navy); border: 1.5px solid var(--field-border); min-height: 48px; font-size: 16px; }
 .btn--outline:hover { background: var(--tint-blue); color: var(--navy); }
+
+/* Anything you can press gives a little under the finger */
+.btn,
+.chip,
+.toggle__btn,
+.menu-btn,
+.action-bar__btn { touch-action: manipulation; }
+.btn:active,
+.chip:active,
+.toggle__btn:active,
+.menu-btn:active,
+.action-bar__btn:active { transform: scale(0.97); }
 
 /* Chips (pill buttons that act like a choice) */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -195,6 +207,7 @@ a:hover { color: var(--blue-dark); }
 }
 .hero__lede { font-size: 20px; line-height: 1.6; color: var(--muted); max-width: 32em; }
 .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+.hero__contact-btns { display: none; }
 
 /* The plain facts a visitor needs on the first screen */
 .facts { margin: 0; width: 100%; max-width: 34em; border-top: 1px solid var(--rule); }
@@ -403,7 +416,8 @@ a:hover { color: var(--blue-dark); }
 .site-footer { border-top: 1px solid var(--rule); }
 .site-footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px; padding-block: 36px 44px; }
 .site-footer__logo { height: 68px; width: auto; display: block; }
-.site-footer__contact { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+.site-footer__contact { display: flex; flex-direction: column; font-size: 16px; }
+.site-footer__contact a { display: inline-block; padding-block: 11px; } /* tall enough to tap */
 .site-footer__meta { display: flex; flex-direction: column; gap: 4px; font-size: 15px; color: var(--muted); }
 
 /* ---------- Illustrations and motion ----------
@@ -522,13 +536,14 @@ a:hover { color: var(--blue-dark); }
     right: 0;
     bottom: 0;
     z-index: 20;
-    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    padding: 8px max(12px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
     background: var(--white);
     border-top: 1px solid var(--rule);
     box-shadow: 0 -2px 12px rgba(1, 51, 99, 0.08);
     transition: transform 200ms ease;
   }
-  .action-bar--hidden { transform: translateY(110%); }
+  .action-bar--hidden,
+  .action-bar--away { transform: translateY(110%); } /* typing in the form, or the hero buttons or quote form are on screen */
   .action-bar__btn {
     display: inline-flex;
     align-items: center;
@@ -545,12 +560,22 @@ a:hover { color: var(--blue-dark); }
   .action-bar__btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
   .action-bar__btn--primary { background: var(--green); border-color: var(--green); color: var(--navy); }
   .action-bar__btn--primary:hover { color: var(--navy); }
+
+  /* Hero: buttons come right after the headline, facts after them */
+  .facts { order: 1; }
+  .hero__actions { width: 100%; }
+  .hero__actions > .btn { width: 100%; }
+  .hero__contact-text { display: none; }
+  .hero__contact-btns { display: flex; gap: 8px; width: 100%; }
+  .hero__contact-btns .btn { flex: 1 1 0; gap: 8px; min-height: 50px; padding: 0 10px; font-size: 16px; white-space: nowrap; }
+  .hero__contact-btns .btn:first-child { flex: 1.9 1 0; }
+  .hero__contact-btns svg { flex: 0 0 auto; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
   body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
 }
 
 /* Phones */
 @media (max-width: 560px) {
-  .wrap { padding-inline: 20px; }
+  .wrap { padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
   .section { padding-block: 56px; }
   .stack-48 { gap: 32px; }
   .stack-40 { gap: 28px; }
@@ -559,8 +584,6 @@ a:hover { color: var(--blue-dark); }
   .hero__copy { gap: 20px; }
   .hero__title { font-size: 30px; line-height: 1.1; }
   .hero__lede { font-size: 18px; line-height: 1.55; }
-  .hero__actions { width: 100%; }
-  .hero__actions .btn { width: 100%; }
   .facts__row { grid-template-columns: 6.2em minmax(0, 1fr); gap: 2px 12px; padding-block: 9px; }
 
   .scheduler { padding: 20px; gap: 16px; }
@@ -636,10 +659,13 @@ a:hover { color: var(--blue-dark); }
   .field select { padding-right: 4px; }
   .field textarea { height: 76px; }
 
-  /* Choices become equal columns: one row each instead of wrapping */
-  .quote-form .chips--3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .quote-form .chips--5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
-  .quote-form .chip { min-width: 0; min-height: 46px; padding: 4px 6px; border-radius: 10px; font-size: 14px; line-height: 1.15; text-wrap: balance; }
+  /* Choices become equal columns: one row each instead of wrapping (schedule card and quote form) */
+  .chips--3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .chips--5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .chips--3 .chip,
+  .chips--5 .chip { min-width: 0; min-height: 46px; padding: 4px 6px; border-radius: 10px; font-size: 14px; line-height: 1.15; text-wrap: balance; }
+  .scheduler .btn--light { align-self: stretch; }
+  .service__cta { align-self: stretch; }
 
   .form-row { gap: 16px; }
   .form-row--contact { grid-template-columns: minmax(0, 1fr); }
