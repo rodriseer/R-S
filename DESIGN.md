@@ -72,7 +72,7 @@ Don't put the owners' names or photos of them anywhere on the site. Say "our fam
 
 Before adding any sentence, ask: **could a competitor put this on their site without changing a word?** If yes, rewrite it with a fact, or delete it.
 
-Good facts are a name, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, leave a `[PLACEHOLDER]` and ask. Never invent one.
+Good facts are a name, a town, a day, a number of days, a language you speak or something you actually do. If a fact is missing, ask for it and leave that line out until you have it. Never invent one, and never put a `[PLACEHOLDER]` on the live site.
 
 ## Phones first
 
@@ -80,7 +80,10 @@ Most people find Connect Cleaning on their phone. Design and check every change 
 
 - Text: body at least 16px, form fields at least 16px (smaller makes iPhones zoom in when you tap a field)
 - Tap targets: at least 44px tall, 48px for anything in the bottom bar or menu
-- The phone number is always a tap-to-call link (`tel:`), and the Call / Text / Get a quote bar stays at the bottom on phones
+- The phone number is always a tap-to-call link (`tel:`). On phones the hero has real Call and Text buttons right under the quote button
+- One quote button on screen at a time: the bottom Call / Text / Get a quote bar only shows after the hero buttons scroll away, and hides while the quote form is on screen
+- On phones, the buttons come before the facts in the hero, so they are on the first screen even on a small phone
+- Choices (how often, which day, which service) are rows of equal buttons on phones, never pills that wrap onto a second line
 - No pop-ups, cookie walls or chat bubbles covering the page
 - Keep it light: fonts stay self-hosted, logos stay WebP, and any photo you add should be under 200 KB and no wider than 1600px
 - Long lists fold up on phones (like the room checklists) instead of making people scroll past them
@@ -91,5 +94,5 @@ Most people find Connect Cleaning on their phone. Design and check every change 
 1. Who runs it (a family business in Rockville)
 2. Where (Rockville and nearby towns)
 3. How to get a free quote (the quote form)
-4. How soon you can start (first visit within X days)
-5. How to reach you (phone next to the main button, and the Call / Text bar on phones)
+4. How to reach you (the phone number, with Call and Text buttons on phones)
+5. The languages you speak

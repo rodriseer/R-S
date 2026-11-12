@@ -226,6 +226,15 @@
       return;
     }
 
+    // A number we can text back: 10 digits, with or without spaces, dashes or +1
+    const phoneField = form.elements.phone;
+    if (phoneField.value.replace(/\D/g, '').length < 10) {
+      phoneField.setAttribute('aria-invalid', 'true');
+      showError('Enter your full phone number, with the area code.');
+      phoneField.focus();
+      return;
+    }
+
     const email = form.elements.email;
     if (email.value.trim() && !email.checkValidity()) {
       email.setAttribute('aria-invalid', 'true');
@@ -286,6 +295,12 @@
     menuBtn.setAttribute('aria-expanded', String(open));
     nav.classList.toggle('nav--open', open);
   }
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') {
+      setMenu(false);
+      menuBtn.focus();
+    }
+  });
   menuBtn.addEventListener('click', function () {
     setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
   });
@@ -330,6 +345,22 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasIO = 'IntersectionObserver' in window;
+
+  // Contact bar (phones): it stays away while the hero's own buttons or the quote form are on screen,
+  // so there are never two "get a quote" buttons showing and the form has the whole screen.
+  if (hasIO) {
+    const onScreen = [];
+    const barIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        const i = onScreen.indexOf(entry.target);
+        if (entry.isIntersecting && i < 0) onScreen.push(entry.target);
+        if (!entry.isIntersecting && i >= 0) onScreen.splice(i, 1);
+      });
+      actionBar.classList.toggle('action-bar--away', onScreen.length > 0);
+    }, { rootMargin: '0px 0px -96px 0px' }); // counts as on screen once it is clear of the bar's own space
+    barIO.observe(document.querySelector('.hero__actions'));
+    barIO.observe(document.querySelector('.form-card'));
+  }
 
   // How the motion feels. Change these three numbers to tune it.
   const EASE = 0.14;   // how quickly motion catches up with your scrolling (1 = instantly, smaller = softer)

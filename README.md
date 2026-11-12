@@ -16,19 +16,13 @@ It's a plain static site: no build step, no framework. Open `index.html` in a br
 | `assets/fonts/` | Montserrat (headings, matches the logo lettering) and Figtree (text), served from this site so phones don't wait on Google Fonts |
 | `DESIGN.md` | Design rules for this site, including what not to do (give it to any AI tool you use to edit the site) |
 
-## Before it goes live
+## Contact details on the page
 
-Use find and replace in `index.html` for each placeholder. Replace every match, not just the visible ones: `[EMAIL]` also sits inside the email links.
+There are no blanks left to fill in. The page shows one way to reach you: the phone number, (301) 525-1949, for calls and texts.
 
-The phone number, (301) 525-1949, is already in. To change it, search `index.html` for `525-1949` (what people see) and `+13015251949` (the Call and Text links), and `script.js` for `525-1949` (form messages).
-
-- `[EMAIL]`: quote section and footer
-- `[NUMBER]`: hero, how many days until the first visit after a quote
-
-Then:
-
-1. **Quote form:** already connected to Formspree. Send a test request once the site is live (see below).
-2. **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work.
+- **To change the number:** search `index.html` for `525-1949` (what people see) and `+13015251949` (the Call and Text links), and `script.js` for `525-1949` (form messages)
+- **To add a business email later:** add a line to the footer's contact block in `index.html`, like `<p>Email <a href="mailto:you@example.com">you@example.com</a></p>`
+- **Check the details:** the service area towns, the room checklist and the "What happens after you send it" steps should match how you actually work
 
 Before changing the design or copy, read `DESIGN.md`.
 
@@ -75,7 +69,8 @@ Nothing moves by itself: everything follows scrolling or a tap. People who turn 
 
 Most people find the business on their phone, so after each change open the live site on an iPhone and an Android phone and check:
 
-- The first screen shows what you do, where, how to get a free quote and the Call / Text / Get a quote bar at the bottom
+- The first screen shows what you do, where, one green **Get a free quote** button, and **Call** and **Text** buttons under it
+- The Call / Text / Get a quote bar slides up from the bottom once you scroll past those buttons, and slides away again when the quote form is on screen
 - Tapping **Call** opens the dialer and **Text** opens messages, with your number filled in
 - **Menu** opens and closes, and the links jump to the right section
 - Tapping a room in "What every clean covers" opens and closes it
@@ -87,10 +82,18 @@ Most people find the business on their phone, so after each change open the live
 
 For a speed and accessibility report, open the live site in Chrome on a computer, then **More tools → Developer tools → Lighthouse**, pick **Mobile** and run it.
 
-## Put it online with GitHub Pages
+## Hosting (Vercel)
 
-On a free GitHub account the repo has to be public for Pages to work (private repos need GitHub Pro).
+The live site is on Vercel, connected to this GitHub repo: https://rs-rs-4722.vercel.app
 
-1. In this repo, go to **Settings → Pages**.
-2. Under **Build and deployment**, pick **Deploy from a branch**, branch `main`, folder `/ (root)`, and save.
-3. After a minute or two the site is live at `https://rodriseer.github.io/R-S/`.
+- Every merge to `main` goes live by itself in about a minute
+- Every pull request gets its own preview link, posted by the Vercel bot, so changes can be checked on a phone before they go live
+
+## Visitor counts (Vercel Web Analytics)
+
+Two `<script>` lines at the end of the `<head>` in `index.html` count visitors and page views. This is the plain HTML version of Vercel Web Analytics, so there is no package to install.
+
+- **See the numbers:** Vercel dashboard, this project, **Analytics**
+- **Turn it on:** Analytics has to be enabled for the project in that same place, and the site has to be deployed once after that
+- **Nothing showing?** Ad blockers stop the count, so test in a browser without one. The script only exists on the live Vercel site, so it does nothing when you open `index.html` from your computer
+- **Script address:** the page loads `/_vercel/insights/script.js`. If Vercel's HTML instructions for this project show a different address, use that one instead
